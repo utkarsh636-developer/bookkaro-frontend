@@ -1,0 +1,41 @@
+@font-face{
+  font-family: Bungee;
+  src: url("../src/assets/fonts/bungee/Bungee-Regular.ttf");
+}
+
+@font-face {
+  font-family: 'Righteous';
+  src: url("../assets/fonts/righteous/Righteous-Regular.ttf");
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url("../assets/fonts/montserrat/Montserrat-VF.ttf") format('truetype-variations');
+  font-weight: 100 900;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url("../assets/fonts/montserrat/Montserrat-Italic-VF.ttf") format('truetype-variations');
+  font-weight: 100 900;
+  font-style: italic;
+}
+
+@import "tailwindcss";
+
+@theme {
+  --font-bungee: 'Bungee', sans-serif;
+  --font-righteous: 'Righteous', cursive;
+  --font-sans: 'Montserrat', sans-serif;
+  
+  /* Extended weight range for variable font */
+  --font-weight-thin: 100;
+  --font-weight-extralight: 200;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+}
