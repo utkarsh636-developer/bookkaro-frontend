@@ -1,6 +1,7 @@
 import React from 'react'
 import LandingPage from './components/LandingPage'
 import Navbar from './components/Navbar';
+import StackedCard from './components/StackedCard';
 import './index.css';
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
     <div>
       <Navbar />
       <LandingPage />
+      <StackedCard />
     </div>
   )
 }

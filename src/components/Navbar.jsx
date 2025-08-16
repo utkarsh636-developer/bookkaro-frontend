@@ -8,8 +8,8 @@ function Navbar() {
 
 
           <a href="/" class="flex items-center space-x-3">
-            <img src="/images/main_logo.png" class="h-12 w-12 rounded-xl" alt="Logo" />
-            <span class="text-2xl font-bold text-[#98430e]">bookkaro</span>
+            <img src="/images/main_logo.png" class="h-16 w-16 rounded-xl" alt="Logo" />
+            <span class="text-3xl font-bold text-[#98430e]">bookkaro</span>
           </a>
 
 
@@ -29,13 +29,13 @@ function Navbar() {
           <div class="items-center justify-between hidden w-full md:flex md:w-auto" id="navbar-search">
             <ul class="flex flex-col md:flex-row md:space-x-8 font-medium mt-4 md:mt-0 w-full md:w-auto bg-[#f6efe3] md:bg-transparent p-4 md:p-0 rounded-lg md:rounded-none">
               <li>
-                <a href="/" class="block py-2 px-4 text-[#98430e] hover:bg-[#e4d3c5] rounded md:hover:bg-transparent md:hover:text-[#98430e] transition">Home</a>
+                <a href="/" class="block py-2 px-4 text-lg text-[#98430e] hover:bg-[#e4d3c5] rounded md:hover:bg-transparent md:hover:text-[#98430e] transition">Home</a>
               </li>
               <li>
-                <a href="/aboutus" class="block py-2 px-4 text-[#98430e] hover:bg-[#e4d3c5] rounded md:hover:bg-transparent md:hover:text-[#98430e] transition">About</a>
+                <a href="/aboutus" class="block py-2 px-4 text-lg text-[#98430e] hover:bg-[#e4d3c5] rounded md:hover:bg-transparent md:hover:text-[#98430e] transition">About</a>
               </li>
               <li>
-                <a href="/services" class="block py-2 px-4 text-[#98430e] hover:bg-[#e4d3c5] rounded md:hover:bg-transparent md:hover:text-[#98430e] transition">Services</a>
+                <a href="/services" class="block py-2 px-4 text-lg text-[#98430e] hover:bg-[#e4d3c5] rounded md:hover:bg-transparent md:hover:text-[#98430e] transition">Services</a>
               </li>
               
                 <li>
