@@ -14,7 +14,7 @@ export default function Events({ events }) {
   return (
     <div className="container mx-auto px-4 mt-10 md:mt-20 sm:px-6 md:px-10 lg:px-40">
       <div>
-        <h1 className="font-semibold text-3xl md:text-4xl">Events</h1>
+        <h1 className="font-semibold font-righteous text-3xl md:text-5xl">Events</h1>
         <span className="block h-[3px] w-16 bg-[#98430e] mt-1 mb-8"></span>
       </div>
 
@@ -25,7 +25,7 @@ export default function Events({ events }) {
             <div
               key={event._id}
               onClick={() => navigate(`/detailsPage/${event._id}`)}
-              className="border rounded-xl flex flex-col h-full cursor-pointer hover:shadow-lg transition"
+              className="border-1 border-gray-300 rounded-xl flex flex-col h-full cursor-pointer hover:shadow-lg transition"
             >
               {/* Image fixed size */}
               <div className="w-full aspect-video overflow-hidden">
