@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function EventDetails({ event }) {
+  const navigate = useNavigate();
+  
   if (!event) return <p>Loading...</p>;
 
   return (
@@ -158,7 +161,7 @@ function EventDetails({ event }) {
 
           <div className="mt-2 border-t-2 flex justify-between items-center px-2 pt-2 md:pt-4">
             <p className="font-semibold text-gray-700 text-2xl">₹ {event.price}</p>
-            <button className="bg-[#98430e] hover:bg-[#7a360c] text-white md:text-lg lg:text-xl font-semibold py-2 md:py-2 px-4 md:px-2 lg:px-4 rounded">
+            <button onClick={() => navigate(`/quantityPage/${event._id}`)} className="bg-[#98430e] hover:bg-[#7a360c] text-white md:text-lg lg:text-xl font-semibold py-2 md:py-2 px-4 md:px-2 lg:px-4 rounded">
               Book Now
             </button>
           </div>

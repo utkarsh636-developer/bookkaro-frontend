@@ -7,6 +7,7 @@ import Events from './components/Events';
 import LoginPage from './components/LoginPage';
 import SignUpPage from './components/SignUpPage';
 import EventDetails from './components/EventDetails';
+import QuantityPage from './components/QuantityPage';
 
 function App() {
   const events = [
@@ -62,6 +63,15 @@ function App() {
           }
         />
 
+        <Route
+          path="/quantityPage/:id"
+          element={
+            <AuthLayout>
+              <QuantityPage events={events} />
+            </AuthLayout>
+          }
+        />
+
         {/* Auth pages */}
         <Route
           path="/login"
@@ -79,6 +89,7 @@ function App() {
             </AuthLayout>
           }
         />
+
       </Routes>
 
   );
