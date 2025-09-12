@@ -27,7 +27,7 @@ export default function Events({ events }) {
               onClick={() => navigate(`/detailsPage/${event._id}`)}
               className="border-1 border-gray-300 rounded-xl flex flex-col h-full cursor-pointer hover:shadow-lg transition"
             >
-              {/* Image fixed size */}
+
               <div className="w-full aspect-video overflow-hidden">
                 <img
                   src={event.image}
@@ -36,18 +36,15 @@ export default function Events({ events }) {
                 />
               </div>
 
-              {/* Info */}
+       
               <div className="p-3 flex-grow flex items-center justify-between">
-                {/* Left side: Title + Location */}
                 <div className="flex-1 pr-3">
                   <p className="font-semibold text-xl">{event.title}</p>
                   <p className="font-medium text-gray-700">{event.location}</p>
                 </div>
-
-                {/* Divider */}
+           
                 <div className="w-[1px] bg-gray-300 h-12 mx-2"></div>
 
-                {/* Right side: Date + Month */}
                 <div className="text-center w-12">
                   <span className="text-2xl font-bold block leading-none">{day}</span>
                   <span className="text-sm uppercase tracking-wide text-gray-600 block">
