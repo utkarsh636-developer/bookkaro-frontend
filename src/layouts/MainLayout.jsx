@@ -6,7 +6,7 @@ function MainLayout({ children }) {
   return (
     <div>
       <Navbar />
-      <main>{children}</main>
+      <main className="pt-24">{children}</main>
       <Footer />
     </div>
   );

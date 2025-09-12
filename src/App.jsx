@@ -14,7 +14,7 @@ function App() {
       _id: "1",
       title: "The Arijit Singh Concert",
       category: "Music",
-      image: "/images/holi.jpg",
+      image: "/images/arijitSingh.jpg",
       date: "2025-09-15",
       time: "7:00 PM",
       ageLimit: 18,
@@ -25,14 +25,14 @@ function App() {
     },
     {
       _id: "2",
-      title: "Tech Expo 2025",
-      category: "Technology",
-      image: "/images/expo.jpg",
+      title: "Mumbai Marathon 2025",
+      category: "Health",
+      image: "/images/marathon.jpeg",
       date: "2025-10-05",
       time: "10:00 AM",
       ageLimit: 12,
       language: "English",
-      location: "BKC, Mumbai",
+      location: "Nariman Point",
       price: 499,
       description: "India's largest technology exhibition.",
     },
@@ -84,10 +84,9 @@ function App() {
   );
 }
 
-// Wrapper to fetch event by id
 function EventDetailsWrapper({ events }) {
-  const { id } = useParams(); // <-- get :id from URL
-  const event = events.find(e => e._id === id); // <-- find matching event
+  const { id } = useParams(); 
+  const event = events.find(e => e._id === id); 
   return event ? <EventDetails event={event} /> : <p>Event not found</p>;
 }
 
