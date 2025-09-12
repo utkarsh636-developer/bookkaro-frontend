@@ -4,7 +4,7 @@ function EventDetails({ event }) {
   if (!event) return <p>Loading...</p>;
 
   return (
-    <div className="container mx-auto mt-20 md:mt-24 px-4 sm:px-3 md:px-4 lg:px-10 xl:px-40">
+    <div className="container mx-auto mt-24 md:mt-42 px-4 sm:px-3 md:px-4 lg:px-10 xl:px-40">
       <div>
         <p className="font-semibold text-gray-900 text-3xl md:text-4xl">
           {event.title}
@@ -24,7 +24,6 @@ function EventDetails({ event }) {
         </div>
 
         <div className="border-2 rounded-2xl p-4 w-full md:w-1/3 break-words flex flex-col justify-between">
-          {/* Date */}
           <div className="flex items-center gap-2 pb-2 lg:pb-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +49,7 @@ function EventDetails({ event }) {
             </p>
           </div>
 
-          {/* Time */}
+   
           <div className="flex items-center gap-2 pb-2 lg:pb-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +69,7 @@ function EventDetails({ event }) {
             <p className="text-gray-700 text-lg">{event.time}</p>
           </div>
 
-          {/* Age Limit */}
+         
           <div className="flex items-center gap-2 pb-2 lg:pb-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +93,7 @@ function EventDetails({ event }) {
           </div>
 
 
-          {/* Language */}
+    
           <div className="flex items-center gap-2 pb-2 lg:pb-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -113,7 +112,7 @@ function EventDetails({ event }) {
             <p className="text-gray-700 text-lg">Language: {event.language}</p>
           </div>
 
-          {/* Category */}
+          
           <div className="flex items-center gap-2 pb-2 lg:pb-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -132,7 +131,7 @@ function EventDetails({ event }) {
             <p className="text-gray-700 text-lg">{event.category}</p>
           </div>
 
-          {/* Location */}
+       
           <div className="flex items-center gap-2 pb-2 lg:pb-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -156,7 +155,7 @@ function EventDetails({ event }) {
             <p className="text-gray-700 text-lg">{event.location}</p>
           </div>
 
-          {/* Price and Book Now */}
+
           <div className="mt-2 border-t-2 flex justify-between items-center px-2 pt-2 md:pt-4">
             <p className="font-semibold text-gray-700 text-2xl">₹ {event.price}</p>
             <button className="bg-[#98430e] hover:bg-[#7a360c] text-white md:text-lg lg:text-xl font-semibold py-2 md:py-2 px-4 md:px-2 lg:px-4 rounded">
