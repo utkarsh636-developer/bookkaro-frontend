@@ -10,6 +10,7 @@ import { BrowserRouter } from "react-router-dom";
 import './index.css';
 import Footer from './components/Footer';
 import LoginPage from './components/LoginPage';
+import SignUpPage from './components/SignUpPage';
 
 function App() {
   const user = false;
@@ -52,14 +53,14 @@ const events = [
           </AuthLayout>
         }
       />
-      {/* <Route
+      <Route
         path="/signup"
         element={
           <AuthLayout>
-            <SignupPage />
+            <SignUpPage />
           </AuthLayout>
         }
-      /> */}
+      />
     </Routes>
   );
 }
