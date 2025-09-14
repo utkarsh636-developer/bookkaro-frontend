@@ -1,10 +1,12 @@
 import React from 'react'
+import api from "../api";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from 'react'
 
 function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [hidden, setHidden] = useState(false);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
       let lastScrollY = window.scrollY;
@@ -28,6 +30,20 @@ function Navbar() {
       window.addEventListener("scroll", handleScroll);
       return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    useEffect(() => {
+      api.get("/users/checkLogin")
+        .then((res) => {
+          if (res.data?.user) {
+            setUser(res.data.user);
+          }
+        })
+        .catch(() => setUser(null));
+    }, []);
+
+    const handleLogout = () => {
+      api.get("/users/logout").then(() => setUser(null));
+    };
 
     return (
       <div>
@@ -81,12 +97,21 @@ function Navbar() {
                   <a href="/services" className="block py-2 px-4 text-lg text-[#98430e] hover:bg-[#e4d3c5] rounded md:hover:bg-transparent md:hover:text-[#98430e] transition">Services</a>
                 </li>
                 <li>
-                  <a href="/users/logout" className="block py-2 px-4 border border-red-600 rounded text-red-600 hover:bg-red-600 hover:text-white transition">Logout</a>
-                </li>
-                <li>
-                  <Link to="/login" className="block py-2 px-4 border border-[#98430e] text-[#98430e] rounded hover:bg-[#98430e] hover:text-[#f6efe3] transition">
-                    Login
-                  </Link>
+                  {user ? (
+                    <button
+                      onClick={handleLogout}
+                      className="bg-red-500 text-white px-4 py-2 rounded"
+                    >
+                      Logout
+                    </button>
+                  ) : (
+                    <a
+                      href="/login"
+                      className="bg-blue-500 text-white px-4 py-2 rounded"
+                    >
+                      Login
+                    </a>
+                  )}
                 </li>
               </ul>
             </div>

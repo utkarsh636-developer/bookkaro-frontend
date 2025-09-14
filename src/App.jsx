@@ -14,20 +14,34 @@ import QuantityPage from './components/QuantityPage';
 function App() {
   const [events, setEvents] = useState([]);
 
-useEffect(() => {
-  api.get("/events")
-    .then((res) => {
-      // res is only defined inside this callback
-      console.log("Events API raw response:", res.data);
+  useEffect(() => {
+    api.get("/events")
+      .then((res) => {
+        // res is only defined inside this callback
+        console.log("Events API raw response:", res.data);
 
-      const data = Array.isArray(res.data) ? res.data : res.data?.events || [];
-      setEvents(data);
-    })
-    .catch((err) => {
-      console.error("Error fetching events:", err);
-      setEvents([]); // fallback to empty array
-    });
-}, []);
+        const data = Array.isArray(res.data) ? res.data : res.data?.events || [];
+        setEvents(data);
+      })
+      .catch((err) => {
+        console.error("Error fetching events:", err);
+        setEvents([]); // fallback to empty array
+      });
+  }, []);
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    api.get("/users/checkLogin") 
+      .then(res => {
+        if (res.data.loggedIn) {
+          setUser(res.data.user);
+        } else {
+          setUser(null);
+        }
+      })
+      .catch(() => setUser(null));
+  }, []);
 
   return (
    
