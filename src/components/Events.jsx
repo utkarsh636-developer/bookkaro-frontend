@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function Events({ events }) {
   const navigate = useNavigate();
+  
+  const safeEvents = Array.isArray(events) ? events : [];
 
   // Utility to format date
   const formatDate = (dateString) => {
@@ -19,7 +21,7 @@ export default function Events({ events }) {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-4 sm:gap-2 md:gap-4 lg:gap-8">
-        {events.map((event) => {
+        {safeEvents.map((event) => {
           const { day, month } = formatDate(event.date);
           return (
             <div

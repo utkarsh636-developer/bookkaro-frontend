@@ -1,4 +1,6 @@
 import React from 'react';
+import { useEffect, useState } from "react";
+import api from "./api";
 import { Routes, Route, useParams, BrowserRouter } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
@@ -10,34 +12,16 @@ import EventDetails from './components/EventDetails';
 import QuantityPage from './components/QuantityPage';
 
 function App() {
-  const events = [
-    {
-      _id: "1",
-      title: "The Arijit Singh Concert",
-      category: "Music",
-      image: "/images/arijitSingh.jpg",
-      date: "2025-09-15",
-      time: "7:00 PM",
-      ageLimit: 18,
-      language: "Hindi",
-      location: "Shivaji Park, Mumbai",
-      price: 999,
-      description: "An amazing evening with soulful music.",
-    },
-    {
-      _id: "2",
-      title: "Mumbai Marathon 2025",
-      category: "Health",
-      image: "/images/marathon.jpeg",
-      date: "2025-10-05",
-      time: "10:00 AM",
-      ageLimit: 12,
-      language: "English",
-      location: "Nariman Point",
-      price: 499,
-      description: "India's largest technology exhibition.",
-    },
-  ];
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    api.get("/events")
+      .then((res) => {
+        console.log("API events response:", res.data);
+        setEvents(Array.isArray(res.data) ? res.data : res.data.events);
+      })
+      .catch((err) => console.error("Error fetching events:", err));
+  }, []);
 
   return (
    
@@ -48,7 +32,11 @@ function App() {
           element={
             <MainLayout>
               <LandingPage />
-              <Events events={events} />
+              {events.length === 0 ? (
+                <p className="text-center mt-10">Loading events...</p>
+              ) : (
+                <Events events={events} />
+              )}
             </MainLayout>
           }
         />
@@ -97,7 +85,7 @@ function App() {
 
 function EventDetailsWrapper({ events }) {
   const { id } = useParams(); 
-  const event = events.find(e => e._id === id); 
+  const event = events.find(e => String(e._id) === id); 
   return event ? <EventDetails event={event} /> : <p>Event not found</p>;
 }
 
