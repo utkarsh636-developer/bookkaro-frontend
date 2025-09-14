@@ -1,38 +1,36 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import api from "../api";
 
 function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError(""); // reset error
 
     try {
-      const res = await fetch("/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await api.post("/users/login", { email, password });
 
-      if (res.ok) {
-        // ✅ success, redirect to homepage
-        navigate("/");
+      if (res.data.success) {
+        navigate("/"); // success
       } else {
-        alert("Invalid email or password");
+        setError(res.data.message);
       }
-    } catch (error) {
-      console.error("Login failed:", error);
-      alert("Something went wrong. Try again later.");
+    } catch (err) {
+      console.error("Login failed:", err);
+      setError("Something went wrong. Try again later.");
     }
-  };
+};
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
         <h2 className="text-2xl font-bold text-center text-[#98430e] mb-6">Login</h2>
-
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">Email</label>
@@ -57,6 +55,7 @@ function LoginPage() {
               required
             />
           </div>
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
           <button
             type="submit"

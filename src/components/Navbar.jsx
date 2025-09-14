@@ -34,15 +34,23 @@ function Navbar() {
     useEffect(() => {
       api.get("/users/checkLogin")
         .then((res) => {
-          if (res.data?.user) {
-            setUser(res.data.user);
+          if (res.data.loggedIn) {
+            setUser(res.data.user); // use loggedIn to check, not just user
+          } else {
+            setUser(null);
           }
         })
         .catch(() => setUser(null));
     }, []);
 
-    const handleLogout = () => {
-      api.get("/users/logout").then(() => setUser(null));
+    const handleLogout = async () => {
+      try {
+        await api.get("/users/logout"); // cookie cleared in backend
+        setUser(null);
+        window.location.href = "/"; // optional: redirect home
+      } catch (err) {
+        console.error("Logout failed", err);
+      }
     };
 
     return (
