@@ -33,7 +33,7 @@ function LoginPage() {
       }
     } catch (err) {
       console.error("Login failed:", err);
-      setError("Email or Password incorrect");
+      setError(err.response?.data?.message || "Something went wrong. Try again later.");
     }
 };
 
