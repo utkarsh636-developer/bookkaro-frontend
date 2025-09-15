@@ -5,7 +5,7 @@ import api from "../api";
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => !!localStorage.getItem("token"));
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -24,21 +24,21 @@ function Navbar() {
   useEffect(() => {
     api.get("/users/checkLogin")
       .then((res) => {
-        if (res.data.loggedIn) setUser(res.data.user);
-        else setUser(null);
+        if (res.data.loggedIn) setUser(true);
+        else setUser(false);
       })
-      .catch(() => setUser(null));
+      .catch(() => setUser(false));
   }, []);
 
   const handleLogout = async () => {
     try {
       await api.get("/users/logout");
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      setUser(null);
-      window.location.href = "/";
     } catch (err) {
       console.error("Logout failed", err);
+    } finally {
+      localStorage.removeItem("token");
+      setUser(false);
+      window.location.href = "/";
     }
   };
 

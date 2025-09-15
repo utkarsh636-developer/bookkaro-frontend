@@ -16,7 +16,7 @@ function SignUpPage() {
     try {
       const res = await api.post("/users/signup", formData);
       console.log(res.data);
-      navigate("/");
+      navigate("/login");
     } catch (err) {
       console.error(err.response?.data || err);
       setError(err.response?.data?.message || "Signup failed");
