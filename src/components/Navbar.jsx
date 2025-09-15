@@ -33,6 +33,8 @@ function Navbar() {
   const handleLogout = async () => {
     try {
       await api.get("/users/logout");
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       setUser(null);
       window.location.href = "/";
     } catch (err) {

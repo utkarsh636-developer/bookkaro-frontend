@@ -1,12 +1,19 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import api from "../api";
 
 function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation(); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (location.state?.message) {
+      setError(location.state.message);
+    }
+  }, [location.state]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -16,16 +23,19 @@ function LoginPage() {
       const res = await api.post("/users/login", { email, password });
 
       if (res.data.success) {
-        navigate("/"); // success
+        if (res.data.success) {
+          // localStorage.setItem("user", JSON.stringify(res.data.user));
+          localStorage.setItem("token", res.data.token); 
+          navigate("/");
+        }
       } else {
         setError(res.data.message);
       }
     } catch (err) {
       console.error("Login failed:", err);
-      setError("Something went wrong. Try again later.");
+      setError("Email or Password incorrect");
     }
 };
-
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
