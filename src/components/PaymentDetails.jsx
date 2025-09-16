@@ -16,31 +16,58 @@ function PaymentPage({ events, razorpayKeyId }) {
   const pricePerTicket = parseFloat(event.price);
   const totalPrice = pricePerTicket * quantity;
 
-  const handlePayment = async () => {
-    const totalAmount = Math.round(totalPrice * 100);
-
-    const response = await fetch("/createOrder", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: totalAmount }),
+  const loadRazorpay = () => {
+    return new Promise((resolve) => {
+      if (window.Razorpay) {
+        resolve(true);
+        return;
+      }
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
     });
+  };
 
-    const orderData = await response.json();
+  const handlePayment = async () => {
+      try {
+        const loaded = await loadRazorpay();
+        if (!loaded) {
+          alert("Failed to load Razorpay SDK. Check your internet connection.");
+          return;
+        }
 
-    const options = {
-      key: razorpayKeyId,
-      amount: orderData.amount,
-      currency: "INR",
-      name: event.title,
-      description: "Ticket Purchase",
-      order_id: orderData.id,
-      handler: function () {
-        window.location.href = `/paymentSuccess/${event._id}?quantity=${quantity}`;
-      },
-    };
+        const totalAmount = Math.round(totalPrice * 100);
+        // ✅ await is legal here
+        const response = await fetch("/createOrder", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: totalAmount }),
+        });
 
-    const razorpay = new window.Razorpay(options);
-    razorpay.open();
+        const orderData = await response.json();
+        console.log("Order data:", orderData);
+
+        const options = {
+          key: orderData.razorpayKeyId,
+          amount: orderData.amount,
+          currency: orderData.currency,
+          name: event.title,
+          description: "Ticket Purchase",
+          order_id: orderData.id,
+          handler: function () {
+            window.location.href = `/paymentSuccess/${event._id}?quantity=${quantity}`;
+          },
+          theme: { color: "#98430e" },
+        };
+
+        const razorpay = new window.Razorpay(options);
+        razorpay.open();
+      } catch (err) {
+        console.error("Payment failed:", err);
+        alert("Payment could not be initiated.");
+      }
   };
 
   return (
@@ -102,7 +129,7 @@ function PaymentPage({ events, razorpayKeyId }) {
 
           <button
             onClick={handlePayment}
-            className="block w-full text-center py-2 px-4 text-white font-semibold rounded-md shadow-sm transition duration-200"
+            className="block w-full text-center py-2 px-4 text-white font-semibold rounded-md shadow-sm transition duration-200 cursor-pointer"
             style={{ backgroundColor: "#98430e" }}
           >
             Pay Now
