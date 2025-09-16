@@ -8,4 +8,13 @@ export default defineConfig({
     tailwindcss(),
     react(),
   ],
+  server: {
+    proxy: {
+      "/createOrder": {
+        target: "http://localhost:3000", // your backend server
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 })
