@@ -11,6 +11,7 @@ import SignUpPage from './components/SignUpPage';
 import EventDetails from './components/EventDetails';
 import QuantityPage from './components/QuantityPage';
 import PaymentDetails from "./components/PaymentDetails";
+import TicketPage from "./components/TicketPage";
 
 function App() {
   const [events, setEvents] = useState([]);
@@ -86,6 +87,15 @@ function App() {
           element={
             <AuthLayout>
               <PaymentDetails events={events} razorpayKeyId="rzp_test_XXXX" />
+            </AuthLayout>
+          }
+        />
+
+        <Route
+          path="/ticket/:id"
+          element={
+            <AuthLayout>
+              <TicketPage events={events} />
             </AuthLayout>
           }
         />

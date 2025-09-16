@@ -57,7 +57,7 @@ function PaymentPage({ events, razorpayKeyId }) {
           description: "Ticket Purchase",
           order_id: orderData.order.id,
           handler: function () {
-            window.location.href = `/paymentSuccess/${event._id}?quantity=${quantity}`;
+            window.location.href = `/ticket/${event._id}?quantity=${quantity}`;
           },
           theme: { color: "#98430e" },
         };
