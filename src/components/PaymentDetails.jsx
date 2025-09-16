@@ -51,11 +51,11 @@ function PaymentPage({ events, razorpayKeyId }) {
 
         const options = {
           key: orderData.razorpayKeyId,
-          amount: orderData.amount,
-          currency: orderData.currency,
+          amount: orderData.order.amount,
+          currency: orderData.order.currency || "INR",
           name: event.title,
           description: "Ticket Purchase",
-          order_id: orderData.id,
+          order_id: orderData.order.id,
           handler: function () {
             window.location.href = `/paymentSuccess/${event._id}?quantity=${quantity}`;
           },
