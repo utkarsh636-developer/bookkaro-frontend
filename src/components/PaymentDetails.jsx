@@ -1,6 +1,18 @@
 import React from "react";
+import { useParams, useLocation } from "react-router-dom";
 
-function PaymentPage({ event, quantity, razorpayKeyId }) {
+function PaymentPage({ events, razorpayKeyId }) {
+  const { id } = useParams(); // eventId from URL
+  const location = useLocation();
+
+  // Get quantity from query string
+  const queryParams = new URLSearchParams(location.search);
+  const quantity = parseInt(queryParams.get("quantity"), 10) || 1;
+
+  // Find event by id
+  const event = events.find((e) => e._id === id);
+  if (!event) return <p>Event not found</p>;
+
   const pricePerTicket = parseFloat(event.price);
   const totalPrice = pricePerTicket * quantity;
 
@@ -35,7 +47,6 @@ function PaymentPage({ event, quantity, razorpayKeyId }) {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="w-[360px] max-w-full bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
         <div className="p-6">
-          
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-xl font-semibold text-[#98430e]">{event.title}</h2>
             <span className="text-sm px-2 py-1 rounded bg-[#98430e1a] text-[#98430e]">
@@ -43,7 +54,6 @@ function PaymentPage({ event, quantity, razorpayKeyId }) {
             </span>
           </div>
 
-          
           <div className="flex items-center text-sm text-gray-600 mb-4">
             <svg
               className="w-4 h-4 mr-2 text-[#98430e]"
@@ -63,7 +73,6 @@ function PaymentPage({ event, quantity, razorpayKeyId }) {
             </span>
           </div>
 
-          
           <div className="flex justify-between mb-4 text-sm">
             <div>
               <p className="text-gray-500">Quantity</p>
@@ -75,12 +84,10 @@ function PaymentPage({ event, quantity, razorpayKeyId }) {
             </div>
           </div>
 
-
           <div className="mb-4">
             <p className="text-sm text-gray-500">Location</p>
             <p className="text-sm font-medium text-gray-700">{event.location}</p>
           </div>
-
 
           <div className="flex justify-between text-sm mb-6">
             <div>
@@ -92,7 +99,6 @@ function PaymentPage({ event, quantity, razorpayKeyId }) {
               <p className="text-gray-700 font-medium">{event.language}</p>
             </div>
           </div>
-
 
           <button
             onClick={handlePayment}
