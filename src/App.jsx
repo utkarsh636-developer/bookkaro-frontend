@@ -17,7 +17,7 @@ function App() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    api.get("/events")
+    api.get("/api/events")
       .then((res) => {
         // res is only defined inside this callback
         console.log("Events API raw response:", res.data);
@@ -34,7 +34,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    api.get("/users/checkLogin") 
+    api.get("/api/users/checkLogin") 
       .then(res => {
         if (res.data.loggedIn) {
           setUser(res.data.user);

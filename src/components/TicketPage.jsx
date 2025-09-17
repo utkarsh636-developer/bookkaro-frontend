@@ -18,7 +18,23 @@ function TicketPage() {
     const fetchTicket = async () => {
       try {
         // Fetch ticket details from backend
-        const res = await fetch(`/paymentSuccess/${id}?quantity=${quantityParam}`);
+        const res = await fetch(`/api/paymentSuccess/${id}?quantity=${quantityParam}`, {
+          credentials: 'include' 
+        });
+
+        // 2. Check the response status BEFORE trying to parse JSON
+        if (!res.ok) {
+          // If not logged in, the server should send a 401 Unauthorized status
+          if (res.status === 401) {
+            console.error("Authentication error: Not logged in. Redirecting...");
+            // Redirect the user to the login page from the frontend
+            window.location.href = "/login";
+            return; // Stop the function here
+          }
+          // Handle other potential server errors
+          throw new Error(`Server responded with an error: ${res.status}`);
+        }
+
         const data = await res.json();
 
         setEventData(data);

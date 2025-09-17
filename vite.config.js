@@ -10,8 +10,13 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      "/createOrder": {
+      "/api": {
         target: "http://localhost:3000", // your backend server
+        changeOrigin: true,
+        secure: false,
+      },
+      "/createOrder": {          // forward /createOrder specifically
+        target: "http://localhost:3000",
         changeOrigin: true,
         secure: false,
       },

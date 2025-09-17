@@ -22,7 +22,7 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
-    api.get("/users/checkLogin")
+    api.get("/api/users/checkLogin")
       .then((res) => {
         if (res.data.loggedIn) setUser(true);
         else setUser(false);
@@ -32,7 +32,7 @@ function Navbar() {
 
   const handleLogout = async () => {
     try {
-      await api.get("/users/logout");
+      await api.get("/api/users/logout");
     } catch (err) {
       console.error("Logout failed", err);
     } finally {
