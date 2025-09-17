@@ -76,12 +76,10 @@ function App() {
 
         <Route
           path="/quantityPage/:id"
-          element={
-            
-              <AuthLayout>
-                <QuantityPage events={events} />
-              </AuthLayout>
-            
+          element={            
+            <AuthLayout>
+              <QuantityPage events={events} />
+            </AuthLayout>
           }
         />
 
