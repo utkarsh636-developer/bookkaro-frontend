@@ -12,6 +12,7 @@ import EventDetails from './components/EventDetails';
 import QuantityPage from './components/QuantityPage';
 import PaymentDetails from "./components/PaymentDetails";
 import TicketPage from "./components/TicketPage";
+// import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   const [events, setEvents] = useState([]);
@@ -76,9 +77,11 @@ function App() {
         <Route
           path="/quantityPage/:id"
           element={
-            <AuthLayout>
-              <QuantityPage events={events} />
-            </AuthLayout>
+            
+              <AuthLayout>
+                <QuantityPage events={events} />
+              </AuthLayout>
+            
           }
         />
 
@@ -105,7 +108,7 @@ function App() {
           path="/login"
           element={
             <AuthLayout>
-              <LoginPage />
+              <LoginPage setUser={setUser} />
             </AuthLayout>
           }
         />

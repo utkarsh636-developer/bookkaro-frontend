@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import api from "../api";
 
-function LoginPage() {
+function LoginPage({ setUser }) {
   const navigate = useNavigate();
   const location = useLocation(); 
   const [email, setEmail] = useState("");
@@ -20,12 +20,13 @@ function LoginPage() {
     setError(""); // reset error
 
     try {
-      const res = await api.post("/users/login", { email, password });
+      const res = await api.post("/api/users/login", { email, password });
 
       if (res.data.success) {
         if (res.data.success) {
           // localStorage.setItem("user", JSON.stringify(res.data.user));
-          localStorage.setItem("token", res.data.token); 
+          localStorage.setItem("token", res.data.token);
+          setUser(res.data.user);
           navigate("/");
         }
       } else {
