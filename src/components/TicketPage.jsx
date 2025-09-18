@@ -18,7 +18,7 @@ function TicketPage() {
     const fetchTicket = async () => {
       try {
         // Fetch ticket details from backend
-        const res = await fetch(`/api/paymentSuccess/${id}?quantity=${quantityParam}`, {
+        const res = await fetch(`/api/payment/success/${id}?quantity=${quantityParam}`, {
           credentials: 'include' 
         });
 
