@@ -37,8 +37,8 @@ function Navbar() {
       console.error("Logout failed", err);
     } finally {
       localStorage.removeItem("token");
-      setUser(false);
-      window.location.href = "/";
+      setUser(null);
+      navigate("/");
     }
   };
 

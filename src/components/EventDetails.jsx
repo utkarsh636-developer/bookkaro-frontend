@@ -171,7 +171,7 @@ function EventDetails({ event }) {
                   navigate("/login", { state: { message: "You must login to book tickets" } });
                 }
               }}
-              className="bg-[#98430e] hover:bg-[#7a360c] text-white md:text-lg lg:text-xl font-semibold py-2 md:py-2 px-4 md:px-2 lg:px-4 rounded"
+              className="bg-[#98430e] hover:bg-[#7a360c] text-white md:text-lg lg:text-xl font-semibold py-2 md:py-2 px-4 md:px-2 lg:px-4 rounded cursor-pointer"
             >
               Book Now
             </button>
