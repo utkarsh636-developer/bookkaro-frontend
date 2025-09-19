@@ -19,11 +19,13 @@ function EventDetails({ event }) {
 
       <div className="mt-5 flex flex-col md:flex-row md:gap-4 lg:gap-10">
         <div className="w-full md:w-2/3 mb-8">
-          <img
-            className="rounded-2xl w-full h-full max-h-[400px] object-cover"
-            src={event.image}
-            alt={event.title}
-          />
+          {event.image && (
+            <img
+              src={`data:image/jpeg;base64,${event.image}`}
+              alt={event.title}
+              className="rounded-2xl w-full h-full max-h-[400px] object-cover"
+            />
+          )}
         </div>
 
         <div className="border-2 rounded-2xl p-4 w-full md:w-1/3 break-words flex flex-col justify-between">

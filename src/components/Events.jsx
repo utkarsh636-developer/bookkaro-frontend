@@ -31,14 +31,15 @@ export default function Events({ events }) {
             >
 
               <div className="w-full aspect-video overflow-hidden">
-                <img
-                  src={event.image}
-                  alt={event.title}
-                  className="w-full h-full object-cover rounded-t-xl"
-                />
+                {event.image && (
+                  <img
+                    src={`data:image/jpeg;base64,${event.image}`}
+                    alt={event.title}
+                    className="w-full h-full object-cover rounded-t-xl"
+                  />
+                )}
               </div>
 
-       
               <div className="p-3 flex-grow flex items-center justify-between">
                 <div className="flex-1 pr-3">
                   <p className="font-semibold text-xl">{event.title}</p>
