@@ -17,21 +17,17 @@ function TicketPage() {
   useEffect(() => {
     const fetchTicket = async () => {
       try {
-        // Fetch ticket details from backend
         const res = await fetch(`/api/payment/success/${id}?quantity=${quantityParam}`, {
           credentials: 'include' 
         });
 
-        // 2. Check the response status BEFORE trying to parse JSON
         if (!res.ok) {
-          // If not logged in, the server should send a 401 Unauthorized status
           if (res.status === 401) {
             console.error("Authentication error: Not logged in. Redirecting...");
-            // Redirect the user to the login page from the frontend
             window.location.href = "/login";
-            return; // Stop the function here
+            return; 
           }
-          // Handle other potential server errors
+   
           throw new Error(`Server responded with an error: ${res.status}`);
         }
 
@@ -39,7 +35,6 @@ function TicketPage() {
 
         setEventData(data);
 
-        // Generate unique ticket ID
         setTicketId("TICKET-" + uuidv4().slice(0, 8).toUpperCase());
       } catch (err) {
         console.error("Failed to fetch ticket:", err);
@@ -72,12 +67,13 @@ function TicketPage() {
       </div>
 
       <div className="bg-white shadow-2xl rounded-xl overflow-hidden max-w-md w-full">
-        {/* Event banner */}
-        <img
-          src={`data:image/jpeg;base64,${event.image}`} // base64 image from backend
-          alt="Event Banner"
-          className="w-full h-48 object-cover"
-        />
+        {event.image && (
+          <img
+            src={`data:image/jpeg;base64,${event.image}`}
+            alt={event.title}
+            className="w-full h-48 object-cover"
+          />
+        )}
 
         <div className="p-6 space-y-4 text-gray-700">
           <div className="text-center">
