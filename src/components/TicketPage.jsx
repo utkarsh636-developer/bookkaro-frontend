@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { QRCodeCanvas } from "qrcode.react";
 import { v4 as uuidv4 } from "uuid";
 import { useParams, useLocation, Link } from "react-router-dom";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 function TicketPage() {
   const { id } = useParams(); // eventId from URL
   const location = useLocation();
+  const ticketRef = useRef();
 
   // Extract quantity from query string (?quantity=2)
   const queryParams = new URLSearchParams(location.search);
@@ -13,6 +16,7 @@ function TicketPage() {
 
   const [eventData, setEventData] = useState(null);
   const [ticketId, setTicketId] = useState("");
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     const fetchTicket = async () => {
@@ -32,9 +36,7 @@ function TicketPage() {
         }
 
         const data = await res.json();
-
         setEventData(data);
-
         setTicketId("TICKET-" + uuidv4().slice(0, 8).toUpperCase());
       } catch (err) {
         console.error("Failed to fetch ticket:", err);
@@ -43,6 +45,37 @@ function TicketPage() {
 
     fetchTicket();
   }, [id, quantityParam]);
+
+  const downloadTicket = async () => {
+      const element = ticketRef.current;
+
+      if (!element) {
+        console.error("Ticket DOM element not found.");
+        return;
+      }
+
+      setIsDownloading(true);
+
+      try {
+        const canvas = await html2canvas(element, {
+          scale: 2,
+          useCORS: true, // Important for images from other domains
+          backgroundColor: '#ffffff' // Set a white background for the canvas
+        });
+        const imgData = canvas.toDataURL("image/png");
+
+        const pdf = new jsPDF("p", "mm", "a4");
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`${ticketId}.pdf`);
+      } catch (error) {
+        console.error("Failed to generate PDF:", error);
+      } finally {
+        setIsDownloading(false); // Ensure the button is re-enabled even if an error occurs
+      }
+  };
 
   if (!eventData) return <p className="text-center mt-10">Loading ticket...</p>;
 
@@ -66,12 +99,15 @@ function TicketPage() {
         </p>
       </div>
 
-      <div className="bg-white shadow-2xl rounded-xl overflow-hidden max-w-md w-full">
+      <div
+        ref={ticketRef}
+        className="bg-white shadow-2xl rounded-xl overflow-hidden max-w-md w-full"
+      >
         {event.image && (
           <img
             src={`data:image/jpeg;base64,${event.image}`}
             alt={event.title}
-            className="w-full h-48 object-cover"
+            className="w-full h-64 object-cover"
           />
         )}
 
@@ -125,6 +161,13 @@ function TicketPage() {
           </div>
         </div>
       </div>
+          <button
+            onClick={downloadTicket}
+            className={`mt-6 px-6 py-2 rounded-md shadow transition
+                ${eventData ? "bg-[#98430e] text-white hover:bg-[#b85c21]" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+          >
+            Download Ticket
+          </button>
     </div>
   );
 }

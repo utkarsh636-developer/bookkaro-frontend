@@ -1,6 +1,6 @@
 import React from 'react';
-import { useEffect, useState } from "react";
 import api from "./api";
+import { useEffect, useState } from "react";
 import { Routes, Route, useParams, BrowserRouter } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
