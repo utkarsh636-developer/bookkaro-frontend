@@ -103,6 +103,16 @@ function TicketPage() {
         ref={ticketRef}
         className="bg-white shadow-2xl rounded-xl overflow-hidden max-w-md w-full"
       >
+
+        <div className="flex items-center justify-center py-2 space-x-3">
+          <img
+            src="/images/main_logo.png"
+            className="h-10 w-10 rounded-xl"
+            alt="Logo"
+          />
+          <span className="text-xl font-bold text-[#98430e]">bookkaro</span>
+        </div>
+        
         {event.image && (
           <img
             src={`data:image/jpeg;base64,${event.image}`}
