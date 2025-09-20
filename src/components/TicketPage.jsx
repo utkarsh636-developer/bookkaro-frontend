@@ -3,7 +3,7 @@ import { QRCodeCanvas } from "qrcode.react";
 import { v4 as uuidv4 } from "uuid";
 import { useParams, useLocation, Link } from "react-router-dom";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+import domtoimage from "dom-to-image";
 
 function TicketPage() {
   const { id } = useParams(); // eventId from URL
@@ -47,35 +47,58 @@ function TicketPage() {
   }, [id, quantityParam]);
 
   const downloadTicket = async () => {
-      const element = ticketRef.current;
+    const element = ticketRef.current;
 
-      if (!element) {
-        console.error("Ticket DOM element not found.");
-        return;
-      }
+    if (!element) {
+      console.error("Ticket DOM element not found.");
+      return;
+    }
 
-      setIsDownloading(true);
+    setIsDownloading(true);
 
-      try {
-        const canvas = await html2canvas(element, {
-          scale: 2,
-          useCORS: true, // Important for images from other domains
-          backgroundColor: '#ffffff' // Set a white background for the canvas
-        });
-        const imgData = canvas.toDataURL("image/png");
+    try {
+      const scale = 2; // Balanced scale
+      const width = element.offsetWidth * scale;
+      const height = element.offsetHeight * scale;
 
-        const pdf = new jsPDF("p", "mm", "a4");
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      const dataUrl = await domtoimage.toJpeg(element, {
+        quality: 0.95,
+        width,
+        height,
+        style: {
+          transform: `scale(${scale})`,
+          transformOrigin: "top left",
+          width: `${element.offsetWidth}px`,
+          height: `${element.offsetHeight}px`,
+        },
+        bgcolor: "#ffffff",
+      });
 
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-        pdf.save(`${ticketId}.pdf`);
-      } catch (error) {
-        console.error("Failed to generate PDF:", error);
-      } finally {
-        setIsDownloading(false); // Ensure the button is re-enabled even if an error occurs
-      }
+      const pdf = new jsPDF("p", "mm", "a4");
+      const pdfWidth = pdf.internal.pageSize.getWidth();  // ~210mm
+      const pdfHeight = pdf.internal.pageSize.getHeight(); // ~297mm
+
+      // Calculate the ratio to fit ticket into A4 without cropping
+      const imgProps = {
+        width: width,
+        height: height,
+      };
+
+      const pxPerMm = width / pdfWidth;
+      const imgHeightInMm = height / pxPerMm;
+
+      // Avoid cutting: center vertically if image is shorter than A4
+      const yOffset = (pdfHeight - imgHeightInMm) / 2;
+
+      pdf.addImage(dataUrl, "JPEG", 0, yOffset > 0 ? yOffset : 0, pdfWidth, imgHeightInMm);
+      pdf.save(`${ticketId}.pdf`);
+    } catch (error) {
+      console.error("Failed to generate PDF:", error);
+    } finally {
+      setIsDownloading(false);
+    }
   };
+
 
   if (!eventData) return <p className="text-center mt-10">Loading ticket...</p>;
 
@@ -102,6 +125,11 @@ function TicketPage() {
       <div
         ref={ticketRef}
         className="bg-white shadow-2xl rounded-xl overflow-hidden max-w-md w-full"
+        style={{
+          width: "600px", // ✅ FIXED width ensures dom-to-image renders it consistently
+          color: "#000",
+          backgroundColor: "#fff",
+        }}
       >
 
         <div className="flex items-center justify-center py-2 space-x-3">
