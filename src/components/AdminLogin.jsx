@@ -1,4 +1,5 @@
 import { useState } from "react";
+import api from "../api";
 
 export default function AdminLogin() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -15,7 +16,7 @@ export default function AdminLogin() {
     setError("");
 
     try {
-      const res = await fetch("/admin/login", {
+      const res = await fetch("/api/admin/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,7 +32,7 @@ export default function AdminLogin() {
       } else {
         console.log("Login success:", data);
         // Example: redirect to upload events page
-        window.location.href = "/upload-events";
+        window.location.href = "/uploadEvents";
       }
     } catch (err) {
       setError("Something went wrong. Please try again.");
