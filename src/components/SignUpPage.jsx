@@ -14,7 +14,7 @@ function SignUpPage() {
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent full page reload
     try {
-      const res = await api.post("/users/signup", formData);
+      const res = await api.post("/api/users/signup", formData);
       console.log(res.data);
       navigate("/login");
     } catch (err) {

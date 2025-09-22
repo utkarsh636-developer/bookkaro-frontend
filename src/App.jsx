@@ -12,10 +12,11 @@ import EventDetails from './components/EventDetails';
 import QuantityPage from './components/QuantityPage';
 import PaymentDetails from "./components/PaymentDetails";
 import TicketPage from "./components/TicketPage";
-import AdminLogin from "./components/AdminLogin";
-import UploadEvents from "./components/UploadEvents";
-import { AuthProvider } from "./context/AuthContext";
-import PrivateRoute from "./components/PrivateRoute";
+// import AdminLogin from './components/adminLogin';
+// import Test from "./components/Test";
+// import UploadEvents from "./components/UploadEvents";
+// import { AuthProvider } from "./context/AuthContext";
+// import PrivateRoute from "./components/PrivateRoute";
 // import PrivateRoute from './components/PrivateRoute';
 
 function App() {
@@ -51,7 +52,7 @@ function App() {
   }, []);
 
   return (
-    <AuthProvider>
+
       <Routes>
         {/* Home page with events */}
         <Route
@@ -123,26 +124,10 @@ function App() {
           }
         />
 
-        {/* Admin auth */}
-        <Route
-          path="/admin/login"
-          element={
-            <AuthLayout>
-              <AdminLogin />
-            </AuthLayout>
-          }
-        />
-        <Route
-          path="/admin/uploadEvents"
-          element={
-            <PrivateRoute>
-              <UploadEvents />
-            </PrivateRoute>
-          }
-        />
+        
 
       </Routes>
-    </AuthProvider>
+
   );
 }
 
