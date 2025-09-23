@@ -10,7 +10,7 @@ export default function QuantityPage({ events }) {
     const [loading, setLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);
 
-    const maxQty = 999;
+    const maxQty = 10;
     const minQty = 1;
 
     // Load event: from props if available, otherwise fetch
@@ -39,15 +39,6 @@ export default function QuantityPage({ events }) {
 
     const handleIncrement = () => updateQuantity(quantity + 1);
     const handleDecrement = () => updateQuantity(quantity - 1);
-
-    const handleInputChange = (e) => {
-        const val = parseInt(e.target.value, 10);
-        if (isNaN(val)) {
-        setQuantity(minQty);
-        } else {
-        updateQuantity(val);
-        }
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -97,8 +88,8 @@ export default function QuantityPage({ events }) {
                 id="quantity-input"
                 name="quantity"
                 value={quantity}
-                onChange={handleInputChange}
-                className="bg-white border-x-0 border border-gray-300 h-11 text-center text-gray-800 text-sm focus:ring-gray-300 focus:border-gray-400 block w-full py-2.5"
+                readOnly
+                className="pointer-events-none bg-white border-x-0 border border-gray-300 h-11 text-center text-gray-800 text-sm focus:outline-none focus:ring-0 block w-full py-2.5"
                 required
             />
 
