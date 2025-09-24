@@ -14,13 +14,13 @@ export default function Events({ events }) {
   };
 
   return (
-    <div className="container mx-auto px-4 mt-10 md:mt-20 sm:px-6 md:px-10 lg:px-40">
+    <div className="container mx-auto px-4 mt-10 md:mt-20 sm:px-4 md:px-6 xl:px-25">
       <div>
-        <h1 className="font-semibold font-righteous text-3xl md:text-5xl">Events</h1>
+        <h1 className="font-semibold font-righteous text-3xl sm:text-4xl md:text-5xl">Events</h1>
         <span className="block h-[3px] w-16 bg-[#98430e] mt-1 mb-8"></span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-4 sm:gap-2 md:gap-4 lg:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-4 sm:gap-2 md:gap-4 xl:gap-8">
         {safeEvents.map((event) => {
           const { day, month } = formatDate(event.date);
           return (
