@@ -181,7 +181,7 @@ function EventDetails({ event }) {
         </div>
       </div>
 
-      <div className="mt-8 mb-16">
+      <div className="mt-8">
         <p className="font-semibold text-gray-800 text-xl md:text-2xl">Description</p>
         <p className="mt-2 text-gray-700 text-md md:text-lg">{event.description}</p>
       </div>
