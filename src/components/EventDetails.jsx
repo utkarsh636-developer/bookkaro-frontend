@@ -7,7 +7,7 @@ function EventDetails({ event }) {
   if (!event) return <p>Loading...</p>;
 
   return (
-    <div className="container mx-auto mt-24 md:mt-42 px-4 sm:px-3 md:px-4 lg:px-10 xl:px-40">
+    <div className="container mx-auto mt-24 md:mt-42 py-10 px-4 sm:px-3 md:px-4 lg:px-10 xl:px-40">
       <div>
         <p className="font-semibold text-gray-900 text-3xl md:text-4xl">
           {event.title}
