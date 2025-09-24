@@ -126,7 +126,6 @@ function TicketPage() {
         ref={ticketRef}
         className="bg-white shadow-2xl rounded-xl overflow-hidden max-w-md w-full"
         style={{
-          width: "600px", // ✅ FIXED width ensures dom-to-image renders it consistently
           color: "#000",
           backgroundColor: "#fff",
         }}
