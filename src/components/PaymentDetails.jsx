@@ -19,6 +19,10 @@ function PaymentPage({ events, razorpayKeyId }) {
   const pricePerTicket = selectedTicket ? selectedTicket.price : 0;
   const totalPrice = pricePerTicket * quantity;
 
+  const GST_RATE = 0.18; // 18% GST
+  const gstAmount = totalPrice * GST_RATE;
+  const totalPriceWithGST = totalPrice + gstAmount;
+
   const loadRazorpay = () => {
     return new Promise((resolve) => {
       if (window.Razorpay) {
@@ -41,7 +45,7 @@ function PaymentPage({ events, razorpayKeyId }) {
           return;
         }
 
-        const totalAmount = Math.round(totalPrice * 100);
+        const totalAmount = Math.round(totalPriceWithGST  * 100);
         // ✅ await is legal here
         const response = await fetch("/createOrder", {
           method: "POST",
@@ -110,7 +114,9 @@ function PaymentPage({ events, razorpayKeyId }) {
             </div>
             <div>
               <p className="text-gray-500">Price</p>
-              <p className="font-medium text-gray-700">₹ {totalPrice.toFixed(2)}</p>
+              <p className="font-medium text-gray-700">
+                ₹ {totalPriceWithGST.toFixed(2)} <span className="text-sm">(including GST)</span>
+              </p>
             </div>
           </div>
 
