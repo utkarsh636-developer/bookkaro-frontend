@@ -21,7 +21,7 @@ function TicketPricePage({ events }) {
             key={index}
             className="flex justify-between items-center p-4 border rounded-xl shadow hover:shadow-lg transition cursor-pointer bg-white"
             onClick={() =>
-              navigate(`/quantityPage/${event._id}`, {
+              navigate(`/quantityPage/${event._id}?type=${ticket.type}`, {
                 state: { ticketType: ticket.type, price: ticket.price }
               })
             }

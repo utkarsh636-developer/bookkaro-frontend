@@ -8,12 +8,15 @@ function PaymentPage({ events, razorpayKeyId }) {
   // Get quantity from query string
   const queryParams = new URLSearchParams(location.search);
   const quantity = parseInt(queryParams.get("quantity"), 10) || 1;
+  const ticketType = queryParams.get("type"); // ticket type from URL
 
   // Find event by id
   const event = events.find((e) => e._id === id);
   if (!event) return <p>Event not found</p>;
 
-  const pricePerTicket = parseFloat(event.price);
+  // Find the selected ticket based on type
+  const selectedTicket = event.tickets?.find(t => t.type === ticketType);
+  const pricePerTicket = selectedTicket ? selectedTicket.price : 0;
   const totalPrice = pricePerTicket * quantity;
 
   const loadRazorpay = () => {

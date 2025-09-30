@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import api from "../api"; // adjust path if needed
 
 export default function QuantityPage({ events }) {
@@ -42,7 +42,7 @@ export default function QuantityPage({ events }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate(`/detailsPage/paymentDetails/${id}?quantity=${quantity}`);
+        navigate(`/detailsPage/paymentDetails/${id}?quantity=${quantity}&type=${selectedTicket.type}`);
     };
 
     // ---- RENDER ----
@@ -54,7 +54,16 @@ export default function QuantityPage({ events }) {
         return <p className="text-center mt-10">Event not found</p>;
     }
 
-    const pricePerTicket = parseFloat(event.price);
+    // Get ticket type from query string
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const ticketType = params.get("type");
+
+    // Find the selected ticket object
+    const selectedTicket = event.tickets?.find(t => t.type === ticketType);
+
+    // Use its price (fallback to 0 if not found)
+    const pricePerTicket = selectedTicket ? selectedTicket.price : 0;
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-50">
