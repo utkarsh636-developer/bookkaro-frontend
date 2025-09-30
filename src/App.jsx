@@ -9,6 +9,7 @@ import Events from './components/Events';
 import LoginPage from './components/LoginPage';
 import SignUpPage from './components/SignUpPage';
 import EventDetails from './components/EventDetails';
+import TicketsPricePage from "./components/TicketsPricePage";
 import QuantityPage from './components/QuantityPage';
 import PaymentDetails from "./components/PaymentDetails";
 import TicketPage from "./components/TicketPage";
@@ -76,6 +77,15 @@ function App() {
             <MainLayout>
               <EventDetailsWrapper events={events} />
             </MainLayout>
+          }
+        />
+
+        <Route
+          path="/ticketPrices/:id"
+          element={
+            <AuthLayout>
+              <TicketsPricePage events={events} />
+            </AuthLayout>
           }
         />
 
