@@ -109,7 +109,7 @@ function App() {
         />
 
         <Route
-          path="/detailsPage/paymentDetails/:id"
+          path="/paymentDetails/:id"
           element={
             <AuthLayout>
               <PaymentDetails events={events} razorpayKeyId="rzp_test_XXXX" />

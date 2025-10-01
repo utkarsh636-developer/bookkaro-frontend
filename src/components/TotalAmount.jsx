@@ -30,7 +30,7 @@ function TotalAmount({ events }) {
 
   const handleProceed = () => {
     navigate(
-      `/detailsPage/paymentDetails/${id}?quantity=${quantity}&type=${selectedTicket.type}&finalAmount=${finalAmount}`
+      `/paymentDetails/${id}?quantity=${quantity}&type=${selectedTicket.type}&finalAmount=${finalAmount}`
     );
   };
 
