@@ -5,7 +5,7 @@ function PaymentPage({ events, razorpayKeyId }) {
   const { id } = useParams(); // eventId from URL
   const location = useLocation();
 
-  // Get quantity from query string
+  // Get quantity and finalAmount from query string
   const queryParams = new URLSearchParams(location.search);
   const quantity = parseInt(queryParams.get("quantity"), 10) || 1;
   const ticketType = queryParams.get("type"); // ticket type from URL
@@ -13,7 +13,7 @@ function PaymentPage({ events, razorpayKeyId }) {
 
   // Find event by id
   const event = events.find((e) => e._id === id);
-  if (!event) return <p>Event not found</p>;
+  if (!event) return <p className="text-center mt-10 text-gray-500">Event not found</p>;
 
   const loadRazorpay = () => {
     return new Promise((resolve) => {
@@ -38,7 +38,6 @@ function PaymentPage({ events, razorpayKeyId }) {
         }
 
         const totalAmount = Math.round(finalAmount * 100); 
-        // ✅ await is legal here
         const response = await fetch("/createOrder", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -71,18 +70,18 @@ function PaymentPage({ events, razorpayKeyId }) {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="w-[360px] max-w-full bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
-        <div className="p-6">
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-xl font-semibold text-[#98430e]">{event.title}</h2>
-            <span className="text-sm px-2 py-1 rounded bg-[#98430e1a] text-[#98430e]">
+      <div className="w-[400px] max-w-full bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-300">
+        <div className="p-8">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold text-[#98430e]">{event.title}</h2>
+            <span className="text-sm px-3 py-1 rounded-full bg-[#98430e1a] text-[#98430e]">
               {event.category}
             </span>
           </div>
 
-          <div className="flex items-center text-sm text-gray-600 mb-4">
+          <div className="flex items-center text-sm text-gray-600 mb-6">
             <svg
-              className="w-4 h-4 mr-2 text-[#98430e]"
+              className="w-5 h-5 mr-2 text-[#98430e]"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
@@ -99,38 +98,40 @@ function PaymentPage({ events, razorpayKeyId }) {
             </span>
           </div>
 
-          <div className="flex justify-between mb-4 text-sm">
+          {/* Quantity & Price */}
+          <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg shadow-sm mb-4">
             <div>
-              <p className="text-gray-500">Quantity</p>
-              <p className="font-medium text-gray-700">{quantity} Tickets</p>
+              <p className="text-gray-500 text-sm">Quantity</p>
+              <p className="font-medium text-gray-800">{quantity} Tickets</p>
             </div>
             <div>
-              <p className="text-gray-500">Price</p>
-              <p className="font-medium text-gray-700">
-                ₹ {finalAmount.toFixed(2)} 
-              </p>
-            </div>
-          </div>
-
-          <div className="mb-4">
-            <p className="text-sm text-gray-500">Location</p>
-            <p className="text-sm font-medium text-gray-700">{event.location}</p>
-          </div>
-
-          <div className="flex justify-between text-sm mb-6">
-            <div>
-              <p className="text-gray-500">Age Limit</p>
-              <p className="text-gray-700 font-medium">{event.ageLimit}+</p>
-            </div>
-            <div>
-              <p className="text-gray-500">Language</p>
-              <p className="text-gray-700 font-medium">{event.language}</p>
+              <p className="text-gray-500 text-sm">Price</p>
+              <p className="font-semibold text-gray-900">₹ {finalAmount.toFixed(2)}</p>
             </div>
           </div>
 
+          {/* Location */}
+          <div className="mb-4 p-4 bg-gray-50 rounded-lg shadow-sm">
+            <p className="text-gray-500 text-sm">Location</p>
+            <p className="text-gray-800 font-medium">{event.location}</p>
+          </div>
+
+          {/* Age & Language */}
+          <div className="flex justify-between p-4 bg-gray-50 rounded-lg shadow-sm mb-6">
+            <div>
+              <p className="text-gray-500 text-sm">Age Limit</p>
+              <p className="text-gray-800 font-medium">{event.ageLimit}+</p>
+            </div>
+            <div>
+              <p className="text-gray-500 text-sm">Language</p>
+              <p className="text-gray-800 font-medium">{event.language}</p>
+            </div>
+          </div>
+
+          {/* Pay Button */}
           <button
             onClick={handlePayment}
-            className="block w-full text-center py-2 px-4 text-white font-semibold rounded-md shadow-sm transition duration-200 cursor-pointer"
+            className="w-full py-3 text-lg font-semibold text-white rounded-xl shadow-md hover:shadow-lg transition duration-200 cursor-pointer"
             style={{ backgroundColor: "#98430e" }}
           >
             Pay Now

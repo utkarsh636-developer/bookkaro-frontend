@@ -211,17 +211,17 @@ function TicketPage() {
           </div>
         </div>
       </div>
-          <button
-            onClick={downloadTicket}
-            disabled={isDownloading}
-            className={`mt-6 px-6 py-2 rounded-md shadow transition ${
-              isDownloading
-                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                : "bg-[#98430e] text-white hover:bg-[#b85c21]"
-            }`}
-          >
-            {isDownloading ? "Downloading..." : "Download Ticket"}
-          </button>
+      <button
+        onClick={downloadTicket}
+        disabled={isDownloading}
+        className={`mt-6 px-6 py-3 text-lg rounded-xl shadow-lg transition cursor-pointer ${
+          isDownloading
+            ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+            : "bg-[#98430e] text-white hover:bg-[#b85c21]"
+        }`}
+      >
+        {isDownloading ? "Downloading..." : "Download Ticket"}
+      </button>
     </div>
   );
 }
