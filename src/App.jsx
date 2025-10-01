@@ -11,6 +11,7 @@ import SignUpPage from './components/SignUpPage';
 import EventDetails from './components/EventDetails';
 import TicketsPricePage from "./components/TicketsPricePage";
 import QuantityPage from './components/QuantityPage';
+import TotalAmount from "./components/TotalAmount"; 
 import PaymentDetails from "./components/PaymentDetails";
 import TicketPage from "./components/TicketPage";
 // import AdminLogin from './components/adminLogin';
@@ -94,6 +95,15 @@ function App() {
           element={            
             <AuthLayout>
               <QuantityPage events={events} />
+            </AuthLayout>
+          }
+        />
+     
+        <Route
+          path="/totalAmount/:id"
+          element={
+            <AuthLayout>
+              <TotalAmount events={events} />
             </AuthLayout>
           }
         />

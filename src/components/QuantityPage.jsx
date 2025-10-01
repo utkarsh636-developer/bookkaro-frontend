@@ -42,7 +42,7 @@ export default function QuantityPage({ events }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate(`/detailsPage/paymentDetails/${id}?quantity=${quantity}&type=${selectedTicket.type}`);
+        navigate(`/totalAmount/${id}?quantity=${quantity}&type=${selectedTicket.type}`);
     };
 
     // ---- RENDER ----
