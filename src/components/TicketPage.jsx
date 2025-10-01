@@ -12,6 +12,7 @@ function TicketPage() {
 
   // Extract quantity from query string (?quantity=2)
   const queryParams = new URLSearchParams(location.search);
+  const ticketType  = queryParams.get("type");
   const quantityParam = parseInt(queryParams.get("quantity"), 10) || 1;
 
   const [eventData, setEventData] = useState(null);
@@ -20,8 +21,9 @@ function TicketPage() {
 
   useEffect(() => {
     const fetchTicket = async () => {
+       console.log("id:", id, "quantity:", quantityParam, "ticketType:", ticketType);
       try {
-        const res = await fetch(`/api/payment/success/${id}?quantity=${quantityParam}`, {
+        const res = await fetch(`/api/payment/success/${id}?quantity=${quantityParam}&type=${ticketType }`, {
           credentials: 'include' 
         });
 
@@ -44,7 +46,7 @@ function TicketPage() {
     };
 
     fetchTicket();
-  }, [id, quantityParam]);
+  }, [id, quantityParam, ticketType]);
 
   const downloadTicket = async () => {
     const element = ticketRef.current;
@@ -103,6 +105,9 @@ function TicketPage() {
   if (!eventData) return <p className="text-center mt-10">Loading ticket...</p>;
 
   const { event, quantity, totalPrice } = eventData;
+
+  const GST_RATE = 0.18;
+  const totalPriceWithGST = totalPrice * (1 + GST_RATE);
 
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-center px-4 py-8">
@@ -163,6 +168,14 @@ function TicketPage() {
               <p>{event.location}</p>
             </div>
             <div>
+              <p className="font-semibold text-gray-700">Quantity</p>
+              <p>{quantity}</p>
+            </div>
+            <div>
+              <p className="font-semibold text-gray-700">Ticket Type</p>
+              <p>{eventData.ticketType}</p>
+            </div>
+            <div>
               <p className="font-semibold text-gray-700">Date</p>
               <p>{new Date(event.date).toDateString()}</p>
             </div>
@@ -176,7 +189,7 @@ function TicketPage() {
             </div>
             <div>
               <p className="font-semibold text-gray-700">Price</p>
-              <p>₹ {totalPrice.toFixed(2)}</p>
+              <p>₹ {totalPriceWithGST.toFixed(2)} <span className="text-sm">(incl. GST)</span></p>
             </div>
             <div>
               <p className="font-semibold text-gray-700">Age Limit</p>
@@ -200,10 +213,14 @@ function TicketPage() {
       </div>
           <button
             onClick={downloadTicket}
-            className={`mt-6 px-6 py-2 rounded-md shadow transition
-                ${eventData ? "bg-[#98430e] text-white hover:bg-[#b85c21]" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            disabled={isDownloading}
+            className={`mt-6 px-6 py-2 rounded-md shadow transition ${
+              isDownloading
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-[#98430e] text-white hover:bg-[#b85c21]"
+            }`}
           >
-            Download Ticket
+            {isDownloading ? "Downloading..." : "Download Ticket"}
           </button>
     </div>
   );
