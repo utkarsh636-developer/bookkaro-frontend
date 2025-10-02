@@ -164,7 +164,7 @@ function EventDetails({ event }) {
           <div className="mt-2 border-t-2 flex justify-between items-center px-2 pt-2 md:pt-4">
             <p className="font-semibold text-gray-700 text-2xl">
               {event.tickets?.length > 1 ? "From " : ""}
-              <span className="whitespace-nowrap">₹ {Math.min(...event.tickets.map(t => t.price))}</span>
+              <span className="whitespace-nowrap">₹ {Math.min(...event.tickets.filter(t => t.price > 0).map(t => t.price))}</span>
             </p>
             <button
               onClick={() => {

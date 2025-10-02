@@ -16,7 +16,9 @@ function TicketPricePage({ events }) {
       </h2>
 
       <div className="space-y-5">
-        {event.tickets?.map((ticket, index) => (
+        {event.tickets
+          ?.filter(ticket => ticket.price && ticket.price > 0) 
+          .map((ticket, index) => (
           <div
             key={index}
             className="flex justify-between items-center p-5 border-2 border-gray-200 rounded-xl shadow-sm hover:shadow-lg hover:border-[#98430e] hover:bg-[#98430e1a] transition cursor-pointer bg-white"
