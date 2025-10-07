@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [user, setUser] = useState(() => !!localStorage.getItem("token"));
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-
       setHidden(window.scrollY > lastScrollY);
       lastScrollY = window.scrollY;
     };
@@ -23,11 +25,19 @@ function Navbar() {
 
   useEffect(() => {
     api.get("/api/users/checkLogin")
-      .then((res) => {
-        if (res.data.loggedIn) setUser(true);
-        else setUser(false);
-      })
+      .then((res) => setUser(res.data.loggedIn))
       .catch(() => setUser(false));
+  }, []);
+
+  // Close dropdown when clicked outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleLogout = async () => {
@@ -39,11 +49,12 @@ function Navbar() {
       localStorage.removeItem("token");
       setUser(null);
       navigate("/");
+      window.location.reload();
     }
   };
 
   return (
-    <nav 
+    <nav
       className={`w-full fixed top-0 left-0 z-50 transition-all duration-500 
       ${hidden ? "-translate-y-full" : "translate-y-0"} 
       ${scrolled ? "backdrop-blur-md bg-white/60 shadow-md" : "bg-transparent"}`}
@@ -56,20 +67,6 @@ function Navbar() {
           <span className="text-3xl font-bold text-[#98430e]">bookkaro</span>
         </Link>
 
-        {/* Mobile toggle */}
-        <div className="flex md:hidden">
-          <button 
-            data-collapse-toggle="navbar-search" 
-            type="button"
-            className="text-[#98430e] p-2 rounded-lg hover:bg-[#e4d3c5] focus:outline-none focus:ring-2 focus:ring-[#98430e]"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-            <span className="sr-only">Toggle menu</span>
-          </button>
-        </div>
-
         {/* Menu items */}
         <div className="hidden md:flex md:items-center md:space-x-8">
           <Link to="/" className="text-lg text-[#98430e] hover:text-[#98430e]">Home</Link>
@@ -77,12 +74,51 @@ function Navbar() {
           <Link to="/services" className="text-lg text-[#98430e] hover:text-[#98430e]">Services</Link>
 
           {user ? (
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer"
-            >
-              Logout
-            </button>
+            <div className="relative" ref={dropdownRef}>
+              {/* Profile icon */}
+              <button
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-[#98430e] text-white hover:bg-orange-800 transition"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5z" />
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                </svg>
+              </button>
+
+              {/* Dropdown */}
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-3 w-44 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                  <ul className="py-2 text-sm text-gray-700">
+                    <li>
+                      <Link
+                        to="/myevents"
+                        className="block px-4 py-2 hover:bg-gray-100"
+                        onClick={() => setDropdownOpen(false)}
+                      >
+                        My Events
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                      >
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
           ) : (
             <Link
               to="/login"

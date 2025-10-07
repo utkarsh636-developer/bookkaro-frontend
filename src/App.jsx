@@ -8,6 +8,7 @@ import LandingPage from './components/LandingPage';
 import Events from './components/Events';
 import LoginPage from './components/LoginPage';
 import SignUpPage from './components/SignUpPage';
+import BookedTickets from "./components/BookedTickets";
 import EventDetails from './components/EventDetails';
 import TicketsPricePage from "./components/TicketsPricePage";
 import QuantityPage from './components/QuantityPage';
@@ -144,8 +145,15 @@ function App() {
           }
         />
 
+        <Route
+          path="/myevents"
+          element={
+            <AuthLayout>
+              <BookedTickets user={user} />
+            </AuthLayout>
+          }
+        />
         
-
       </Routes>
 
   );
