@@ -39,7 +39,11 @@ function TicketPage() {
 
         const data = await res.json();
         setEventData(data);
-        setTicketId("TICKET-" + uuidv4().slice(0, 8).toUpperCase());
+        if (data.tickets && data.tickets.length > 0) {
+          setTicketId(data.tickets[0].ticketId); // pick first ticket
+        } else {
+          setTicketId(""); // fallback
+        }
       } catch (err) {
         console.error("Failed to fetch ticket:", err);
       }

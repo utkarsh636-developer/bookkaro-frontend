@@ -6,60 +6,87 @@ function BookedTickets() {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-  const fetchTickets = async () => {
-    try {
-      const loginRes = await api.get("/api/users/checkLogin");
-      if (loginRes.data.loggedIn && loginRes.data.user) {
-        const loggedUser = loginRes.data.user;
-        setUser(loggedUser);
+    const fetchTickets = async () => {
+      try {
+        const loginRes = await api.get("/api/users/checkLogin");
+        if (loginRes.data.loggedIn && loginRes.data.user) {
+          const loggedUser = loginRes.data.user;
+          setUser(loggedUser);
 
-        // Fetch booked tickets using the populated route
-        const ticketsRes = await api.get(`/api/users/${loggedUser._id}/bookings`);
-        setTickets(ticketsRes.data || []);
-      } else {
+          const ticketsRes = await api.get(`/api/users/${loggedUser._id}/bookings`);
+          setTickets(ticketsRes.data || []);
+        } else {
+          setUser(null);
+          setTickets([]);
+        }
+      } catch (err) {
+        console.error("Failed to fetch tickets:", err);
         setUser(null);
         setTickets([]);
       }
-    } catch (err) {
-      console.error("Failed to fetch tickets:", err);
-      setUser(null);
-      setTickets([]);
-    }
-  };
+    };
 
-  fetchTickets();
-}, []);
+    fetchTickets();
+  }, []);
 
   return (
-    <div className="max-w-[1000px] mx-auto mt-28 px-4">
+    <div className="max-w-6xl mx-auto mt-24 px-4">
       {/* User Info */}
       {user && (
-        <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-start gap-4 p-6 bg-white shadow-md rounded-lg border border-gray-200">
-          <div className="w-24 h-24 flex items-center justify-center rounded-full bg-[#98430e] text-white text-4xl font-semibold">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-start gap-4 p-6 bg-white shadow-lg rounded-xl border border-gray-200">
+          <div className="w-24 h-24 flex items-center justify-center rounded-full bg-[#98430e] text-white text-4xl font-bold">
             {user.fullname ? user.fullname.charAt(0).toUpperCase() : "U"}
           </div>
           <div className="text-center sm:text-left">
-            <h2 className="text-2xl font-bold text-[#98430e]">{user.fullname}</h2>
+            <h2 className="text-3xl font-bold text-[#98430e]">{user.fullname}</h2>
             <p className="text-gray-600">{user.email}</p>
           </div>
         </div>
       )}
 
       {/* Tickets Section */}
-      <div className="mt-10">
-        <h3 className="text-2xl font-semibold text-[#98430e] mb-4">My Booked Tickets</h3>
-        {tickets.map((ticket) => (
-  <div key={ticket._id} className="bg-white shadow-md rounded-lg p-4 border border-gray-200 hover:shadow-lg transition">
-    <h4 className="text-lg font-semibold text-[#98430e] mb-2">
-      {ticket.eventId?.title || "Event Name"}
-    </h4>
-    <p className="text-gray-700 text-sm">Date: {new Date(ticket.date).toLocaleDateString()}</p>
-    <p className="text-gray-700 text-sm">Venue: {ticket.venue || ticket.eventId?.location || "N/A"}</p>
-    <p className="text-gray-700 text-sm">Quantity: {ticket.quantity || 1}</p>
-    <p className="text-gray-700 text-sm">Ticket Type: {ticket.ticketType}</p>
-  </div>
-))}
+      <div className="mt-12">
+        <h3 className="text-3xl font-semibold text-[#98430e] mb-6">My Booked Tickets</h3>
 
+        {tickets.length === 0 ? (
+          <p className="text-gray-500 text-center text-lg">You haven’t booked any tickets yet.</p>
+        ) : (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {tickets.map((ticket) => (
+              <div
+                key={ticket._id}
+                className="bg-white rounded-2xl shadow-xl border border-gray-200 hover:shadow-2xl transition duration-300 overflow-hidden"
+              >
+                <div className="p-6">
+                  <h4 className="text-xl font-bold text-[#98430e] mb-2">{ticket.eventId?.title || "Event Name"}</h4>
+                  <span className="inline-block mb-4 px-3 py-1 text-sm font-semibold rounded-full bg-[#98430e1a] text-[#98430e]">
+                    {ticket.ticketType || "General"}
+                  </span>
+
+                  <div className="mb-2">
+                    <p className="text-gray-500 text-sm">Date</p>
+                    <p className="text-gray-800 font-medium">{new Date(ticket.date).toLocaleDateString()}</p>
+                  </div>
+
+                  <div className="mb-2">
+                    <p className="text-gray-500 text-sm">Venue</p>
+                    <p className="text-gray-800 font-medium">{ticket.venue || ticket.eventId?.location || "N/A"}</p>
+                  </div>
+
+                  <div className="flex justify-between items-center mt-4">
+                    <p className="text-gray-500 text-sm">Quantity</p>
+                    <p className="text-gray-800 font-semibold">{ticket.quantity || 1}</p>
+                  </div>
+
+                  <div className="mt-4 border-t border-gray-200 pt-4 flex justify-between items-center">
+                    <p className="text-gray-500 text-sm">Ticket ID</p>
+                    <p className="text-gray-800 font-mono text-sm">{ticket.tickets?.[0]?.ticketId || "N/A"}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
