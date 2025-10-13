@@ -41,6 +41,7 @@ function PaymentPage({ events, razorpayKeyId }) {
         const response = await fetch("/createOrder", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({ amount: totalAmount }),
         });
 
@@ -54,9 +55,37 @@ function PaymentPage({ events, razorpayKeyId }) {
           name: event.title,
           description: "Ticket Purchase",
           order_id: orderData.order.id,
-          handler: function () {
-            window.location.href = `/ticket/${event._id}?quantity=${quantity}&type=${ticketType}`;
-          },
+          handler: async function (response) {
+          try {
+            // Send payment details to backend for verification
+            const verifyRes = await fetch("http://localhost:3000/api/detailsPage/verifyPayment", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                eventId: event._id,
+                ticketType,
+                quantity,
+              }),
+            });
+
+            const verifyData = await verifyRes.json();
+            console.log("Payment verify response:", verifyData);
+
+            if (verifyRes.ok && verifyData.success) {
+              // Redirect to ticket page only after successful verification
+              window.location.href = `/ticket/${event._id}?quantity=${quantity}&type=${ticketType}`;
+            } else {
+              alert(verifyData.error || "Payment verification failed!");
+            }
+          } catch (err) {
+            console.error("Payment verification error:", err);
+            alert("Payment verification failed!");
+          }
+        },
           theme: { color: "#98430e" },
         };
 
