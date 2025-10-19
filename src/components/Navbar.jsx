@@ -7,18 +7,17 @@ function Navbar() {
   const [hidden, setHidden] = useState(false);
   const [user, setUser] = useState(() => !!localStorage.getItem("token"));
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
-
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
       setHidden(window.scrollY > lastScrollY);
       lastScrollY = window.scrollY;
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -29,7 +28,6 @@ function Navbar() {
       .catch(() => setUser(false));
   }, []);
 
-  // Close dropdown when clicked outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -67,7 +65,7 @@ function Navbar() {
           <span className="text-3xl font-bold text-[#98430e]">bookkaro</span>
         </Link>
 
-        {/* Menu items */}
+        {/* Desktop Menu */}
         <div className="hidden md:flex md:items-center md:space-x-8">
           <Link to="/" className="text-lg text-[#98430e] hover:text-[#98430e]">Home</Link>
           <Link to="/aboutus" className="text-lg text-[#98430e] hover:text-[#98430e]">About</Link>
@@ -75,7 +73,6 @@ function Navbar() {
 
           {user ? (
             <div className="relative" ref={dropdownRef}>
-              {/* Profile icon */}
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="flex items-center justify-center w-10 h-10 rounded-full bg-[#98430e] text-white hover:bg-orange-800 transition"
@@ -94,7 +91,6 @@ function Navbar() {
                 </svg>
               </button>
 
-              {/* Dropdown */}
               {dropdownOpen && (
                 <div className="absolute right-0 mt-3 w-44 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
                   <ul className="py-2 text-sm text-gray-700">
@@ -128,6 +124,57 @@ function Navbar() {
             </Link>
           )}
         </div>
+
+        {/* ✅ Mobile Hamburger */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden flex flex-col justify-center items-center w-10 h-10 text-[#98430e] hover:text-orange-800 focus:outline-none"
+        >
+          <span
+            className={`block h-[2px] w-6 bg-current transition-transform duration-300 ${
+              menuOpen ? "rotate-45 translate-y-[6px]" : ""
+            }`}
+          ></span>
+          <span
+            className={`block h-[2px] w-6 bg-current my-[4px] transition-opacity duration-300 ${
+              menuOpen ? "opacity-0" : "opacity-100"
+            }`}
+          ></span>
+          <span
+            className={`block h-[2px] w-6 bg-current transition-transform duration-300 ${
+              menuOpen ? "-rotate-45 -translate-y-[6px]" : ""
+            }`}
+          ></span>
+        </button>
+      </div>
+
+      {/* ✅ Animated Mobile Menu with Blur */}
+      <div
+        className={`md:hidden backdrop-blur-lg bg-white/70 border-t border-gray-200 shadow-md overflow-hidden transition-all duration-500 ease-in-out ${
+          menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <ul className="flex flex-col space-y-2 p-4 text-[#98430e] text-lg">
+          <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
+          <li><Link to="/aboutus" onClick={() => setMenuOpen(false)}>About</Link></li>
+          <li><Link to="/services" onClick={() => setMenuOpen(false)}>Services</Link></li>
+
+          {user ? (
+            <>
+              <li><Link to="/myevents" onClick={() => setMenuOpen(false)}>My Events</Link></li>
+              <li>
+                <button
+                  onClick={() => { handleLogout(); setMenuOpen(false); }}
+                  className="w-full text-left"
+                >
+                  Logout
+                </button>
+              </li>
+            </>
+          ) : (
+            <li><Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link></li>
+          )}
+        </ul>
       </div>
     </nav>
   );
