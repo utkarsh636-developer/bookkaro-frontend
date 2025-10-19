@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api";
 
 function BookedTickets() {
   const [user, setUser] = useState(null);
   const [tickets, setTickets] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -29,6 +31,14 @@ function BookedTickets() {
     fetchTickets();
   }, []);
 
+  // ✅ Handle click and redirect with eventId, quantity, and type
+  const handleTicketClick = (ticket) => {
+    const eventId = ticket.eventId?._id || ticket.eventId; // handle both populated & plain IDs
+    const quantity = ticket.quantity || 1;
+    const ticketType = ticket.ticketType || "General";
+    navigate(`/ticket/${eventId}?quantity=${quantity}&type=${ticketType}`);
+  };
+
   return (
     <div className="max-w-6xl mx-auto mt-24 px-4">
       {/* User Info */}
@@ -45,32 +55,41 @@ function BookedTickets() {
       )}
 
       {/* Tickets Section */}
-      <div className="mt-12">
+      <div className="mt-12 mb-12">
         <h3 className="text-3xl font-semibold text-[#98430e] mb-6">My Booked Tickets</h3>
 
         {tickets.length === 0 ? (
-          <p className="text-gray-500 text-center text-lg">You haven’t booked any tickets yet.</p>
+          <p className="text-gray-500 text-center text-lg">
+            You haven’t booked any tickets yet.
+          </p>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {tickets.map((ticket) => (
               <div
                 key={ticket._id}
-                className="bg-white rounded-2xl shadow-xl border border-gray-200 hover:shadow-2xl transition duration-300 overflow-hidden"
+                onClick={() => handleTicketClick(ticket)} // ✅ Redirect on click
+                className="bg-white rounded-2xl shadow-xl border border-gray-200 hover:shadow-2xl hover:scale-[1.02] transition duration-300 overflow-hidden cursor-pointer"
               >
                 <div className="p-6">
-                  <h4 className="text-xl font-bold text-[#98430e] mb-2">{ticket.eventId?.title || "Event Name"}</h4>
+                  <h4 className="text-xl font-bold text-[#98430e] mb-2">
+                    {ticket.eventId?.title || "Event Name"}
+                  </h4>
                   <span className="inline-block mb-4 px-3 py-1 text-sm font-semibold rounded-full bg-[#98430e1a] text-[#98430e]">
                     {ticket.ticketType || "General"}
                   </span>
 
                   <div className="mb-2">
                     <p className="text-gray-500 text-sm">Date</p>
-                    <p className="text-gray-800 font-medium">{new Date(ticket.date).toLocaleDateString()}</p>
+                    <p className="text-gray-800 font-medium">
+                      {new Date(ticket.date).toLocaleDateString()}
+                    </p>
                   </div>
 
                   <div className="mb-2">
                     <p className="text-gray-500 text-sm">Venue</p>
-                    <p className="text-gray-800 font-medium">{ticket.venue || ticket.eventId?.location || "N/A"}</p>
+                    <p className="text-gray-800 font-medium">
+                      {ticket.venue || ticket.eventId?.location || "N/A"}
+                    </p>
                   </div>
 
                   <div className="flex justify-between items-center mt-4">
@@ -80,7 +99,9 @@ function BookedTickets() {
 
                   <div className="mt-4 border-t border-gray-200 pt-4 flex justify-between items-center">
                     <p className="text-gray-500 text-sm">Ticket ID</p>
-                    <p className="text-gray-800 font-mono text-sm">{ticket.tickets?.[0]?.ticketId || "N/A"}</p>
+                    <p className="text-gray-800 font-mono text-sm">
+                      {ticket.tickets?.[0]?.ticketId || "N/A"}
+                    </p>
                   </div>
                 </div>
               </div>
