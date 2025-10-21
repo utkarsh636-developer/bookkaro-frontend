@@ -52,58 +52,61 @@ function TicketPage() {
     fetchTicket();
   }, [id, quantityParam, ticketType]);
 
-  const downloadTicket = async () => {
-    const element = ticketRef.current;
+const downloadTicket = async () => {
+  const element = ticketRef.current;
+  if (!element) {
+    console.error("Ticket DOM element not found.");
+    return;
+  }
 
-    if (!element) {
-      console.error("Ticket DOM element not found.");
-      return;
+  setIsDownloading(true);
+
+  try {
+    const scale = 1.5; // high-quality capture
+    const rect = element.getBoundingClientRect();
+    const width = rect.width * scale;
+    const height = rect.height * scale;
+
+    const dataUrl = await domtoimage.toJpeg(element, {
+      quality: 1, // max quality
+      width,
+      height,
+      style: {
+        transform: `scale(${scale})`,
+        transformOrigin: "top left",
+        width: `${rect.width}px`,
+        height: `${rect.height}px`,
+      },
+      bgcolor: "#ffffff",
+      cacheBust: true,
+    });
+
+    // Max PDF width in pixels (A4 ~595px wide at 72dpi)
+    const maxPdfWidth = 500;
+    const imgAspect = width / height;
+    let pdfWidth = width;
+    let pdfHeight = height;
+
+    if (width > maxPdfWidth) {
+      pdfWidth = maxPdfWidth;
+      pdfHeight = pdfWidth / imgAspect;
     }
 
-    setIsDownloading(true);
+    const pdf = new jsPDF({
+      orientation: pdfWidth > pdfHeight ? "l" : "p",
+      unit: "px",
+      format: [pdfWidth, pdfHeight],
+    });
 
-    try {
-      const scale = 2; // Balanced scale
-      const width = element.offsetWidth * scale;
-      const height = element.offsetHeight * scale;
+    pdf.addImage(dataUrl, "JPEG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save(`${ticketId || "ticket"}.pdf`);
+  } catch (error) {
+    console.error("Failed to generate PDF:", error);
+  } finally {
+    setIsDownloading(false);
+  }
+};
 
-      const dataUrl = await domtoimage.toJpeg(element, {
-        quality: 0.95,
-        width,
-        height,
-        style: {
-          transform: `scale(${scale})`,
-          transformOrigin: "top left",
-          width: `${element.offsetWidth}px`,
-          height: `${element.offsetHeight}px`,
-        },
-        bgcolor: "#ffffff",
-      });
-
-      const pdf = new jsPDF("p", "mm", "a4");
-      const pdfWidth = pdf.internal.pageSize.getWidth();  // ~210mm
-      const pdfHeight = pdf.internal.pageSize.getHeight(); // ~297mm
-
-      // Calculate the ratio to fit ticket into A4 without cropping
-      const imgProps = {
-        width: width,
-        height: height,
-      };
-
-      const pxPerMm = width / pdfWidth;
-      const imgHeightInMm = height / pxPerMm;
-
-      // Avoid cutting: center vertically if image is shorter than A4
-      const yOffset = (pdfHeight - imgHeightInMm) / 2;
-
-      pdf.addImage(dataUrl, "JPEG", 0, yOffset > 0 ? yOffset : 0, pdfWidth, imgHeightInMm);
-      pdf.save(`${ticketId}.pdf`);
-    } catch (error) {
-      console.error("Failed to generate PDF:", error);
-    } finally {
-      setIsDownloading(false);
-    }
-  };
 
 
   if (!eventData) return <p className="text-center mt-10">Loading ticket...</p>;
