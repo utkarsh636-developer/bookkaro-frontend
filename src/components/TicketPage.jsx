@@ -52,62 +52,60 @@ function TicketPage() {
     fetchTicket();
   }, [id, quantityParam, ticketType]);
 
-const downloadTicket = async () => {
-  const element = ticketRef.current;
-  if (!element) {
-    console.error("Ticket DOM element not found.");
-    return;
-  }
-
-  setIsDownloading(true);
-
-  try {
-    const scale = 1.5; // high-quality capture
-    const rect = element.getBoundingClientRect();
-    const width = rect.width * scale;
-    const height = rect.height * scale;
-
-    const dataUrl = await domtoimage.toJpeg(element, {
-      quality: 1, // max quality
-      width,
-      height,
-      style: {
-        transform: `scale(${scale})`,
-        transformOrigin: "top left",
-        width: `${rect.width}px`,
-        height: `${rect.height}px`,
-      },
-      bgcolor: "#ffffff",
-      cacheBust: true,
-    });
-
-    // Max PDF width in pixels (A4 ~595px wide at 72dpi)
-    const maxPdfWidth = 500;
-    const imgAspect = width / height;
-    let pdfWidth = width;
-    let pdfHeight = height;
-
-    if (width > maxPdfWidth) {
-      pdfWidth = maxPdfWidth;
-      pdfHeight = pdfWidth / imgAspect;
+  const downloadTicket = async () => {
+    const element = ticketRef.current;
+    if (!element) {
+      console.error("Ticket DOM element not found.");
+      return;
     }
 
-    const pdf = new jsPDF({
-      orientation: pdfWidth > pdfHeight ? "l" : "p",
-      unit: "px",
-      format: [pdfWidth, pdfHeight],
-    });
+    setIsDownloading(true);
 
-    pdf.addImage(dataUrl, "JPEG", 0, 0, pdfWidth, pdfHeight);
-    pdf.save(`${ticketId || "ticket"}.pdf`);
-  } catch (error) {
-    console.error("Failed to generate PDF:", error);
-  } finally {
-    setIsDownloading(false);
-  }
-};
+    try {
+      const scale = 1.5; // high-quality capture
+      const rect = element.getBoundingClientRect();
+      const width = rect.width * scale;
+      const height = rect.height * scale;
 
+      const dataUrl = await domtoimage.toJpeg(element, {
+        quality: 1, // max quality
+        width,
+        height,
+        style: {
+          transform: `scale(${scale})`,
+          transformOrigin: "top left",
+          width: `${rect.width}px`,
+          height: `${rect.height}px`,
+        },
+        bgcolor: "#ffffff",
+        cacheBust: true,
+      });
 
+      // Max PDF width in pixels (A4 ~595px wide at 72dpi)
+      const maxPdfWidth = 500;
+      const imgAspect = width / height;
+      let pdfWidth = width;
+      let pdfHeight = height;
+
+      if (width > maxPdfWidth) {
+        pdfWidth = maxPdfWidth;
+        pdfHeight = pdfWidth / imgAspect;
+      }
+
+      const pdf = new jsPDF({
+        orientation: pdfWidth > pdfHeight ? "l" : "p",
+        unit: "px",
+        format: [pdfWidth, pdfHeight],
+      });
+
+      pdf.addImage(dataUrl, "JPEG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`${ticketId || "ticket"}.pdf`);
+    } catch (error) {
+      console.error("Failed to generate PDF:", error);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   if (!eventData) return <p className="text-center mt-10">Loading ticket...</p>;
 
