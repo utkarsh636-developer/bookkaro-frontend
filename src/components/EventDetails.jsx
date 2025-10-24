@@ -3,6 +3,24 @@ import { useNavigate } from "react-router-dom";
 
 function EventDetails({ event }) {
   const navigate = useNavigate();
+
+  const handleBookClick = async () => {
+    try {
+      const res = await fetch("/api/users/checkLogin", {
+        method: "GET",
+        credentials: "include", // important to send cookies
+      });
+      const data = await res.json();
+
+      if (data.loggedIn) {
+        navigate(`/ticketPrices/${event._id}`);
+      } else {
+        navigate("/login", { state: { message: "You must login to book tickets" } });
+      }
+    } catch (err) {
+      navigate("/login", { state: { message: "You must login to book tickets" } });
+    }
+  };
   
   if (!event) return <p>Loading...</p>;
 
@@ -167,14 +185,7 @@ function EventDetails({ event }) {
               <span className="whitespace-nowrap">₹ {Math.min(...event.tickets.filter(t => t.price > 0).map(t => t.price))}</span>
             </p>
             <button
-              onClick={() => {
-                const token = localStorage.getItem("token");
-                if (token) {
-                  navigate(`/ticketPrices/${event._id}`);
-                } else {
-                  navigate("/login", { state: { message: "You must login to book tickets" } });
-                }
-              }}
+              onClick={handleBookClick}
               className="bg-[#98430e] hover:bg-[#7a360c] text-white md:text-lg lg:text-xl font-semibold py-2 md:py-2 px-4 md:px-2 lg:px-4 rounded cursor-pointer"
             >
               Book Now

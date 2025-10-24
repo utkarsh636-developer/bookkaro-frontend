@@ -5,7 +5,7 @@ import api from "../api";
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [user, setUser] = useState(() => !!localStorage.getItem("token"));
+  const [user, setUser] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -23,8 +23,11 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
-    api.get("/api/users/checkLogin")
-      .then((res) => setUser(res.data.loggedIn))
+    api.get("/api/users/checkLogin", { withCredentials: true })
+      .then((res) => {
+        if (res.data.loggedIn) setUser(res.data.user); // store user object
+        else setUser(false); // logged out
+      })
       .catch(() => setUser(false));
   }, []);
 
@@ -40,14 +43,11 @@ function Navbar() {
 
   const handleLogout = async () => {
     try {
-      await api.get("/api/users/logout");
+      await api.get("/api/users/logout", { withCredentials: true });
+      setUser(false);
+      navigate("/");
     } catch (err) {
       console.error("Logout failed", err);
-    } finally {
-      localStorage.removeItem("token");
-      setUser(null);
-      navigate("/");
-      window.location.reload();
     }
   };
 
@@ -159,7 +159,7 @@ function Navbar() {
           <li><Link to="/aboutus" onClick={() => setMenuOpen(false)}>About</Link></li>
           <li><Link to="/services" onClick={() => setMenuOpen(false)}>Services</Link></li>
 
-          {user ? (
+          {user === null ? null : user ? (
             <>
               <li><Link to="/myevents" onClick={() => setMenuOpen(false)}>My Events</Link></li>
               <li>
