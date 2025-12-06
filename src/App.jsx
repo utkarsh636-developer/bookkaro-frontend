@@ -15,6 +15,8 @@ import QuantityPage from './components/QuantityPage';
 import TotalAmount from "./components/TotalAmount"; 
 import PaymentDetails from "./components/PaymentDetails";
 import TicketPage from "./components/TicketPage";
+import AboutUs from './components/AboutUs';
+import Services from './components/Services';
 // import AdminLogin from './components/adminLogin';
 // import Test from "./components/Test";
 // import UploadEvents from "./components/UploadEvents";
@@ -68,6 +70,26 @@ function App() {
               ) : (
                 <Events events={events} />
               )}
+            </MainLayout>
+          }
+        />
+
+        {/* About Us */}
+        <Route
+          path="/aboutus"
+          element={
+            <MainLayout>
+              <AboutUs />
+            </MainLayout>
+          }
+        />
+
+        {/* Services */}
+        <Route
+          path="/services"
+          element={
+            <MainLayout>
+              <Services />
             </MainLayout>
           }
         />
