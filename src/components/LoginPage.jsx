@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import api from "../api";
 
 function LoginPage({ setUser }) {
@@ -8,6 +9,7 @@ function LoginPage({ setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (location.state?.message) {
@@ -57,14 +59,25 @@ function LoginPage({ setUser }) {
 
           <div>
             <label className="block text-sm font-medium text-gray-700">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#98430e]"
-              placeholder="••••••••"
-              required
-            />
+
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#98430e] pr-10"
+                placeholder="••••••••"
+                required
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-2 flex items-center px-2 text-gray-500 hover:text-gray-700"
+              >
+                {showPassword ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
+              </button>
+            </div>
           </div>
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function SignUpPage() {
   const [formData, setFormData] = useState({ fullname: "", email: "", password: "" });
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -40,6 +42,7 @@ function SignUpPage() {
               placeholder="Your name"
             />
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700">Email</label>
             <input
@@ -51,17 +54,30 @@ function SignUpPage() {
               placeholder="you@example.com"
             />
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#98430e]"
-              placeholder="••••••••"
-            />
+
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#98430e] pr-12"
+                placeholder="••••••••"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-3 flex items-center px-2 text-gray-500 hover:text-gray-700"
+              >
+                {showPassword ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
+              </button>
+            </div>
           </div>
+
           <button
             type="submit"
             className="w-full bg-[#98430e] text-white py-2 rounded-md hover:bg-orange-800 transition"
@@ -69,10 +85,12 @@ function SignUpPage() {
             Signup
           </button>
         </form>
+
         <p className="text-sm text-center text-gray-600 mt-4">
           Already have an account?
           <a href="/login" className="text-[#98430e] font-medium hover:underline"> Log in</a>
         </p>
+
       </div>
     </div>
   );
