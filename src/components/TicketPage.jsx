@@ -21,28 +21,17 @@ function TicketPage() {
 
   useEffect(() => {
     const fetchTicket = async () => {
-       console.log("id:", id, "quantity:", quantityParam, "ticketType:", ticketType);
       try {
-        const res = await fetch(`/api/payment/success/${id}?quantity=${quantityParam}&type=${ticketType }`, {
-          credentials: 'include' 
-        });
+        const { data } = await api.get(
+          `/api/payment/success/${id}?quantity=${quantityParam}&type=${ticketType}`
+        );
 
-        if (!res.ok) {
-          if (res.status === 401) {
-            console.error("Authentication error: Not logged in. Redirecting...");
-            window.location.href = "/login";
-            return; 
-          }
-   
-          throw new Error(`Server responded with an error: ${res.status}`);
-        }
-
-        const data = await res.json();
         setEventData(data);
+
         if (data.tickets && data.tickets.length > 0) {
-          setTicketId(data.tickets[0].ticketId); // pick first ticket
+          setTicketId(data.tickets[0].ticketId);
         } else {
-          setTicketId(""); // fallback
+          setTicketId("");
         }
       } catch (err) {
         console.error("Failed to fetch ticket:", err);

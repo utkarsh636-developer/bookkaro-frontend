@@ -6,10 +6,7 @@ function EventDetails({ event }) {
 
   const handleBookClick = async () => {
     try {
-      const res = await fetch("/api/users/checkLogin", {
-        method: "GET",
-        credentials: "include", // important to send cookies
-      });
+      const res = await api.get("/api/users/checkLogin");
       const data = await res.json();
 
       if (data.loggedIn) {
