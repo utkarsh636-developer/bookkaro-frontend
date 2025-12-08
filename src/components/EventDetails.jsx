@@ -7,7 +7,7 @@ function EventDetails({ event }) {
   const handleBookClick = async () => {
     try {
       const res = await api.get("/api/users/checkLogin");
-      const data = await res.json();
+      const data = res.data;
 
       if (data.loggedIn) {
         navigate(`/ticketPrices/${event._id}`);
