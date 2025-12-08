@@ -1,12 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../api";
 
 function EventDetails({ event }) {
   const navigate = useNavigate();
 
   const handleBookClick = async () => {
     try {
-      const res = await api.get("/api/users/checkLogin");
+      const res = await api.get("/api/users/checkLogin", {
+        withCredentials: true,
+      });
       const data = res.data;
 
       if (data.loggedIn) {
