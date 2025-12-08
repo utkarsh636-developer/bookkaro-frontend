@@ -45,7 +45,12 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    api.get("/api/users/checkLogin") 
+    api.get("/api/users/checkLogin", {
+      headers: {
+        "Cache-Control": "no-store",
+        Pragma: "no-cache"
+      }
+    })
       .then(res => {
         if (res.data.loggedIn) {
           setUser(res.data.user);
@@ -63,7 +68,7 @@ function App() {
         <Route
           path="/"
           element={
-            <MainLayout>
+            <MainLayout user = {user}>
               <LandingPage />
               {events.length === 0 ? (
                 <p className="text-center mt-10">Loading events...</p>
@@ -78,7 +83,7 @@ function App() {
         <Route
           path="/aboutus"
           element={
-            <MainLayout>
+            <MainLayout user = {user}>
               <AboutUs />
             </MainLayout>
           }
@@ -88,7 +93,7 @@ function App() {
         <Route
           path="/services"
           element={
-            <MainLayout>
+            <MainLayout user = {user}>
               <Services />
             </MainLayout>
           }
@@ -98,7 +103,7 @@ function App() {
         <Route
           path="/detailsPage/:id"
           element={
-            <MainLayout>
+            <MainLayout user = {user}>
               <EventDetailsWrapper events={events} />
             </MainLayout>
           }

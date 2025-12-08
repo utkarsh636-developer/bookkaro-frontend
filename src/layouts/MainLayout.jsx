@@ -2,10 +2,10 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-function MainLayout({ children }) {
+function MainLayout({ children, user }) {
   return (
     <div>
-      <Navbar />
+      <Navbar user = {user} />
       <main>{children}</main>
       <Footer />
     </div>

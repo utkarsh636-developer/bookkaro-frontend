@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 
-function Navbar() {
+function Navbar({ user }) {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -22,14 +22,19 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    api.get("/api/users/checkLogin", { withCredentials: true })
-      .then((res) => {
-        if (res.data.loggedIn) setUser(res.data.user); // store user object
-        else setUser(false); // logged out
-      })
-      .catch(() => setUser(false));
-  }, []);
+  // useEffect(() => {
+  //   api.get("/api/users/checkLogin", {
+  //         headers: {
+  //           "Cache-Control": "no-store",
+  //           Pragma: "no-cache",
+  //         },
+  //       })
+  //       .then((res) => {
+  //         if (res.data.loggedIn) setUser(res.data.user); // store user object
+  //         else setUser(false); // logged out
+  //       })
+  //       .catch(() => setUser(false));
+  // }, []);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -44,8 +49,9 @@ function Navbar() {
   const handleLogout = async () => {
     try {
       await api.get("/api/users/logout", { withCredentials: true });
-      setUser(false);
+      // setUser(false);
       navigate("/");
+      window.location.reload();
     } catch (err) {
       console.error("Logout failed", err);
     }
