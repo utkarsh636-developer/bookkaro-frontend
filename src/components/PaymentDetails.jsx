@@ -65,9 +65,8 @@ function PaymentPage({ events, razorpayKeyId }) {
                 quantity,
               }
             );
-            console.log("Payment verify response:", verifyData);
 
-            if (verifyRes.ok && verifyData.success) {
+            if (verifyData.success) {
               // Redirect to ticket page only after successful verification
               window.location.href = `/ticket/${event._id}?quantity=${quantity}&type=${ticketType}`;
             } else {
