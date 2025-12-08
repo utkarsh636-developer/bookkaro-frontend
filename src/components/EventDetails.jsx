@@ -9,6 +9,10 @@ function EventDetails({ event }) {
     try {
       const res = await api.get("/api/users/checkLogin", {
         withCredentials: true,
+        headers: {
+          "Cache-Control": "no-store",
+          Pragma: "no-cache",
+        },
       });
       const data = res.data;
 
