@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useParams, useLocation, Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import domtoimage from "dom-to-image";
+import api from "../api";
 
 function TicketPage() {
   const { id } = useParams(); // eventId from URL
