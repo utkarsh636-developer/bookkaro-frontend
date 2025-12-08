@@ -81,7 +81,7 @@ function BookedTickets() {
                   <div className="mb-2">
                     <p className="text-gray-500 text-sm">Date</p>
                     <p className="text-gray-800 font-medium">
-                      {new Date(ticket.date).toLocaleDateString()}
+                      {new Date(ticket.date).toLocaleDateString("en-GB")}
                     </p>
                   </div>
 
