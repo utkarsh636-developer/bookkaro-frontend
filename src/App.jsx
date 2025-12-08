@@ -17,7 +17,7 @@ import PaymentDetails from "./components/PaymentDetails";
 import TicketPage from "./components/TicketPage";
 import AboutUs from './components/AboutUs';
 import Services from './components/Services';
-import ScrollToTop from "./ScrollToTop";
+import ScrollToTop from "./components/ScrollToTop";
 // import AdminLogin from './components/adminLogin';
 // import Test from "./components/Test";
 // import UploadEvents from "./components/UploadEvents";
