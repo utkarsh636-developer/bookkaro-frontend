@@ -1,76 +1,12 @@
-/* Righteous */
-@font-face {
-  font-family: 'Righteous';
-  src: url("/fonts/righteous/Righteous.woff2") format("woff2"),
-       url("/fonts/righteous/Righteous.woff") format("woff");
-  font-display: swap;
-}
-
-/* Bungee */
-@font-face {
-  font-family: 'Bungee';
-  src: url("/fonts/bungee/Bungee.woff2") format("woff2"),
-       url("/fonts/bungee/Bungee.woff") format("woff");
-  font-display: swap;
-}
-
-/* MONTSERRAT – STATIC, MOBILE SAFE */
-@font-face {
-  font-family: 'Montserrat';
-  src: url('/fonts/montserrat/Montserrat-Regular.woff2') format('woff2'),
-       url('/fonts/montserrat/Montserrat-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: url('/fonts/montserrat/Montserrat-Medium.woff2') format('woff2'),
-       url('/fonts/montserrat/Montserrat-Medium.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: url('/fonts/montserrat/Montserrat-SemiBold.woff2') format('woff2'),
-       url('/fonts/montserrat/Montserrat-SemiBold.woff') format('woff');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: url('/fonts/montserrat/Montserrat-Bold.woff2') format('woff2'),
-       url('/fonts/montserrat/Montserrat-Bold.woff') format('woff');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
+@import "./fonts.css";
 @import "tailwindcss";
 
 @theme {
   --font-bungee: 'Bungee', sans-serif;
   --font-righteous: 'Righteous', cursive;
   --font-sans: 'Montserrat', sans-serif;
-  
-  /* Extended weight range for variable font */
-  --font-weight-thin: 100;
-  --font-weight-extralight: 200;
-  --font-weight-light: 300;
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-  --font-weight-extrabold: 800;
-  --font-weight-black: 900;
 }
 
 html, body {
   font-family: 'Montserrat', sans-serif;
 }
-
