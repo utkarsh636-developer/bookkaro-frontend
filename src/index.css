@@ -1,4 +1,4 @@
-@import "./fonts.css";
+/* @import "./fonts.css";
 @import "tailwindcss";
 
 @theme {
@@ -9,4 +9,19 @@
 
 html, body {
   font-family: 'Montserrat', sans-serif;
+} */
+
+@import "tailwindcss";
+
+/* Global fonts */
+html, body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.font-bungee {
+  font-family: 'Bungee', cursive;
+}
+
+.font-righteous {
+  font-family: 'Righteous', cursive;
 }

@@ -1,21 +1,21 @@
 /* Righteous */
-@font-face {
+/* @font-face {
   font-family: 'Righteous';
   src: url('/fonts/righteous/Righteous.woff2') format('woff2'),
        url('/fonts/righteous/Righteous.woff') format('woff');
   font-display: swap;
-}
+} */
 
 /* Bungee */
-@font-face {
+/* @font-face {
   font-family: 'Bungee';
   src: url('/fonts/bungee/Bungee.woff2') format('woff2'),
        url('/fonts/bungee/Bungee.woff') format('woff');
   font-display: swap;
-}
+} */
 
 /* Montserrat (STATIC) */
-@font-face {
+/* @font-face {
   font-family: 'Montserrat';
   src: url('/fonts/montserrat/Montserrat-Regular.woff2') format('woff2'),
        url('/fonts/montserrat/Montserrat-Regular.woff') format('woff');
@@ -45,4 +45,4 @@
        url('/fonts/montserrat/Montserrat-Bold.woff') format('woff');
   font-weight: 700;
   font-display: swap;
-}
+} */
