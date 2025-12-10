@@ -50,6 +50,7 @@ function Navbar({ user, setUser }) {
     try {
       await api.get("/api/users/logout", { withCredentials: true });
       setUser(null);
+      window.scrollTo({ top: 0, behavior: "smooth" });
       navigate("/");
     } catch (err) {
       console.error("Logout failed", err);
