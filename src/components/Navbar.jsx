@@ -164,9 +164,13 @@ function Navbar({ user, setUser }) {
           <li><Link to="/aboutus" onClick={() => setMenuOpen(false)}>About</Link></li>
           <li><Link to="/services" onClick={() => setMenuOpen(false)}>Services</Link></li>
 
-          {user === null ? null : user ? (
+          {user ? (
             <>
-              <li><Link to="/myevents" onClick={() => setMenuOpen(false)}>My Events</Link></li>
+              <li>
+                <Link to="/myevents" onClick={() => setMenuOpen(false)}>
+                  My Events
+                </Link>
+              </li>
               <li>
                 <button
                   onClick={() => { handleLogout(); setMenuOpen(false); }}
@@ -177,7 +181,11 @@ function Navbar({ user, setUser }) {
               </li>
             </>
           ) : (
-            <li><Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link></li>
+            <li>
+              <Link to="/login" onClick={() => setMenuOpen(false)}>
+                Login
+              </Link>
+            </li>
           )}
         </ul>
       </div>
