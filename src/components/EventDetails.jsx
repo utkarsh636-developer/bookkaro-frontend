@@ -16,7 +16,7 @@ function EventDetails({ event }) {
       });
       const data = res.data;
 
-      if (data.loggedIn) {
+      if (data.loggedIn && data.role === "user") {
         navigate(`/ticketPrices/${event._id}`);
       } else {
         navigate("/login", { state: { message: "You must login to book tickets" } });

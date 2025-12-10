@@ -11,7 +11,7 @@ function BookedTickets() {
     const fetchTickets = async () => {
       try {
         const loginRes = await api.get("/api/users/checkLogin");
-        if (loginRes.data.loggedIn && loginRes.data.user) {
+        if (loginRes.data.loggedIn && loginRes.data.role === "user") {
           const loggedUser = loginRes.data.user;
           setUser(loggedUser);
 

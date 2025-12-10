@@ -54,7 +54,7 @@ function App() {
       }
     })
       .then(res => {
-        if (res.data.loggedIn) {
+        if (res.data.loggedIn && res.data.role === "user") {
           setUser(res.data.user);
         } else {
           setUser(null);
