@@ -3,33 +3,26 @@ import { useNavigate } from "react-router-dom";
 import api from "../api";
 
 function BookedTickets() {
-  const [user, setUser] = useState(null);
   const [tickets, setTickets] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!user) return; 
+
     const fetchTickets = async () => {
       try {
-        const loginRes = await api.get("/api/users/checkLogin");
-        if (loginRes.data.loggedIn && loginRes.data.role === "user") {
-          const loggedUser = loginRes.data.user;
-          setUser(loggedUser);
-
-          const ticketsRes = await api.get(`/api/users/${loggedUser._id}/bookings`);
-          setTickets(ticketsRes.data || []);
-        } else {
-          setUser(null);
-          setTickets([]);
-        }
+        const ticketsRes = await api.get(
+          `/api/users/${user._id}/bookings`
+        );
+        setTickets(ticketsRes.data || []);
       } catch (err) {
         console.error("Failed to fetch tickets:", err);
-        setUser(null);
         setTickets([]);
       }
     };
 
     fetchTickets();
-  }, []);
+  }, [user]);
 
   // ✅ Handle click and redirect with eventId, quantity, and type
   const handleTicketClick = (ticket) => {

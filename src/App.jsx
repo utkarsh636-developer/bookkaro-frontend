@@ -44,6 +44,7 @@ function App() {
   }, []);
 
   const [user, setUser] = useState(null);
+  const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
     api.get("/api/users/checkLogin", {
@@ -60,8 +61,11 @@ function App() {
           setUser(null);
         }
       })
-      .catch(() => setUser(null));
+      .catch(() => setUser(null))
+      .finally(() => setAuthChecked(true));
   }, []);
+
+  if (!authChecked) return <div>Loading...</div>;
 
   return (
     <>
@@ -107,7 +111,7 @@ function App() {
           path="/detailsPage/:id"
           element={
             <MainLayout user = {user} setUser={setUser}>
-              <EventDetailsWrapper events={events} />
+              <EventDetailsWrapper events={events} user={user} />
             </MainLayout>
           }
         />
@@ -194,7 +198,7 @@ function App() {
 function EventDetailsWrapper({ events }) {
   const { id } = useParams(); 
   const event = events.find(e => String(e._id) === id); 
-  return event ? <EventDetails event={event} /> : <p>Event not found</p>;
+  return event ? <EventDetails event={event} user={user} /> : <p>Event not found</p>;
 }
 
 export default App;

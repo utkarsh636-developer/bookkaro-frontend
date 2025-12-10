@@ -2,27 +2,16 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
 
-function EventDetails({ event }) {
+function EventDetails({ event, user }) {
   const navigate = useNavigate();
 
-  const handleBookClick = async () => {
-    try {
-      const res = await api.get("/api/users/checkLogin", {
-        withCredentials: true,
-        headers: {
-          "Cache-Control": "no-store",
-          Pragma: "no-cache",
-        },
+   const handleBookClick = () => {
+    if (user) {
+      navigate(`/ticketPrices/${event._id}`);
+    } else {
+      navigate("/login", {
+        state: { message: "You must login to book tickets" }
       });
-      const data = res.data;
-
-      if (data.loggedIn && data.role === "user") {
-        navigate(`/ticketPrices/${event._id}`);
-      } else {
-        navigate("/login", { state: { message: "You must login to book tickets" } });
-      }
-    } catch (err) {
-      navigate("/login", { state: { message: "You must login to book tickets" } });
     }
   };
   
