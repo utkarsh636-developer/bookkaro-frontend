@@ -12,14 +12,6 @@ function PaymentPage({ events, razorpayKeyId }) {
   const ticketType = queryParams.get("type"); // ticket type from URL
   const finalAmount = parseFloat(queryParams.get("finalAmount")) || 0;
 
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  if (!user) {
-    alert("Please login again");
-    window.location.href = "/login";
-    return null;
-  }
-
   // Find event by id
   const event = events.find((e) => e._id === id);
   if (!event) return <p className="text-center mt-10 text-gray-500">Event not found</p>;
@@ -71,7 +63,9 @@ function PaymentPage({ events, razorpayKeyId }) {
                 eventId: event._id,
                 ticketType,
                 quantity,
-                userId: user._id,
+              },
+              {
+                withCredentials: true
               }
             );
 
