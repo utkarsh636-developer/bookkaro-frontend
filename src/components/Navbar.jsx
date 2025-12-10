@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 
-function Navbar({ user }) {
+function Navbar({ user, setUser }) {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   // const [user, setUser] = useState(null);
@@ -49,9 +49,8 @@ function Navbar({ user }) {
   const handleLogout = async () => {
     try {
       await api.get("/api/users/logout", { withCredentials: true });
-      // setUser(false);
+      setUser(null);
       navigate("/");
-      window.location.reload();
     } catch (err) {
       console.error("Logout failed", err);
     }
