@@ -31,9 +31,6 @@ function App() {
   useEffect(() => {
     api.get("/api/events")
       .then((res) => {
-        // res is only defined inside this callback
-        console.log("Events API raw response:", res.data);
-
         const data = Array.isArray(res.data) ? res.data : res.data?.events || [];
         setEvents(data);
       })
@@ -195,10 +192,11 @@ function App() {
   );
 }
 
-function EventDetailsWrapper({ events }) {
+function EventDetailsWrapper({ events, user }) {
   const { id } = useParams(); 
   const event = events.find(e => String(e._id) === id); 
-  return event ? <EventDetails event={event} user={user} /> : <p>Event not found</p>;
+  if (!event) return <p>Event not found</p>;
+  return <EventDetails event={event} user={user} />;
 }
 
 export default App;
