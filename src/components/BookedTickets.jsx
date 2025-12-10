@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
 
-function BookedTickets() {
+function BookedTickets({ user }) {
   const [tickets, setTickets] = useState([]);
   const navigate = useNavigate();
 
