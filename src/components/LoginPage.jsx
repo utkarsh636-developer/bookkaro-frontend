@@ -22,7 +22,10 @@ function LoginPage({ setUser }) {
     setError(""); // reset error
 
     try {
-      const res = await api.post("/api/users/login", { email, password });
+      const res = await api.post("/api/users/login", 
+        { email, password },
+        { withCredentials: true }
+      );
 
       if (res.data.success) {
         if (res.data.success) {
@@ -38,7 +41,7 @@ function LoginPage({ setUser }) {
       console.error("Login failed:", err);
       setError(err.response?.data?.message || "Something went wrong. Try again later.");
     }
-};
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

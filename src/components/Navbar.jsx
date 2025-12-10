@@ -49,6 +49,7 @@ function Navbar({ user, setUser }) {
   const handleLogout = async () => {
     try {
       await api.get("/api/users/logout", { withCredentials: true });
+      localStorage.removeItem("user");
       setUser(null);
       window.scrollTo({ top: 0, behavior: "smooth" });
       navigate("/");
