@@ -62,6 +62,8 @@ function App() {
       .finally(() => setAuthChecked(true));
   }, []);
 
+  if (!authChecked) return <div>Loading...</div>;
+
   return (
     <>
       <ScrollToTop />
@@ -114,7 +116,7 @@ function App() {
         <Route
           path="/ticketPrices/:id"
           element={
-            <AuthLayout user={user} authChecked={authChecked}>
+            <AuthLayout>
               <TicketsPricePage events={events} />
             </AuthLayout>
           }
@@ -123,7 +125,7 @@ function App() {
         <Route
           path="/quantityPage/:id"
           element={            
-            <AuthLayout user={user} authChecked={authChecked}>
+            <AuthLayout>
               <QuantityPage events={events} />
             </AuthLayout>
           }
@@ -132,7 +134,7 @@ function App() {
         <Route
           path="/totalAmount/:id"
           element={
-            <AuthLayout user={user} authChecked={authChecked}>
+            <AuthLayout>
               <TotalAmount events={events} />
             </AuthLayout>
           }
@@ -141,7 +143,7 @@ function App() {
         <Route
           path="/paymentDetails/:id"
           element={
-            <AuthLayout user={user} authChecked={authChecked}>
+            <AuthLayout>
               <PaymentDetails events={events} razorpayKeyId="rzp_test_XXXX" />
             </AuthLayout>
           }
@@ -150,27 +152,34 @@ function App() {
         <Route
           path="/ticket/:id"
           element={
-            <AuthLayout user={user} authChecked={authChecked}>
+            <AuthLayout>
               <TicketPage events={events} />
             </AuthLayout>
           }
         />
 
+        {/* Auth pages */}
         <Route
           path="/login"
-          element={<LoginPage setUser={setUser} />}
+          element={
+            <AuthLayout>
+              <LoginPage setUser={setUser} />
+            </AuthLayout>
+          }
         />
-
         <Route
           path="/signup"
-          element={<SignUpPage />}
+          element={
+            <AuthLayout>
+              <SignUpPage />
+            </AuthLayout>
+          }
         />
 
-        {/* Auth pages */}
         <Route
           path="/myevents"
           element={
-            <AuthLayout user={user} authChecked={authChecked}>
+            <AuthLayout>
               <BookedTickets user={user} />
             </AuthLayout>
           }
