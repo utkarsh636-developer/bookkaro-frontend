@@ -16,13 +16,8 @@ function EventDetails({ event, user }) {
   
   if (!event) {
     return (
-      <div className="flex flex-col items-center justify-center py-20">
-        <div className="leading-none">
-          <Loader />
-        </div>
-        <p className="mt-2 text-base font-medium text-gray-600">
-          Loading event details...
-        </p>
+      <div className="flex items-center justify-center py-20">
+        <Loader />
       </div>
     );
   }
