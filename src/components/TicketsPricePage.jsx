@@ -1,13 +1,25 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Loader from "./Loader";
 
-function TicketPricePage({ events }) {
+function TicketsPricePage({ events }) {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const event = events.find(e => String(e._id) === id);
 
-  if (!event) return <p className="text-center mt-10 text-gray-500">Event not found</p>;
+  if (!events || events.length === 0) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <Loader />
+        <p className="mt-4 text-gray-600">Loading tickets…</p>
+      </div>
+    );
+  }
+
+  if (!event) {
+    return <p className="text-center mt-10 text-red-500">Event not found</p>;
+  }
 
   return (
     <div className="container mx-auto mt-24 px-4 sm:px-6 md:px-10">
@@ -57,4 +69,4 @@ function TicketPricePage({ events }) {
   );
 }
 
-export default TicketPricePage;
+export default TicketsPricePage;

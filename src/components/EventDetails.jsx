@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Loader from "./Loader"; 
 
 function EventDetails({ event, user }) {
   const navigate = useNavigate();
@@ -13,7 +14,16 @@ function EventDetails({ event, user }) {
     }
   };
   
-  if (!event) return <p>Loading...</p>;
+  if (!event) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+        <Loader />
+        <p className="mt-4 text-lg font-medium text-gray-600">
+          Loading event details...
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto mt-24 md:mt-32 py-10 px-4 sm:px-3 md:px-4 lg:px-10 xl:px-20 2xl:px-40">

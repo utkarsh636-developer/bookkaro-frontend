@@ -4,6 +4,7 @@ import { QRCodeCanvas } from "qrcode.react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import api from "../api";
+import Loader from "./Loader";
 
 function TicketPage() {
   const { id } = useParams(); // eventId from URL
