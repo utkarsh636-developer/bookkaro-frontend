@@ -16,7 +16,7 @@ function EventDetails({ event, user }) {
   
   if (!event) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+      <div className="flex flex-col items-center justify-center py-20">
         <Loader />
         <p className="mt-4 text-lg font-medium text-gray-600">
           Loading event details...
