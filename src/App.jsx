@@ -62,8 +62,6 @@ function App() {
       .finally(() => setAuthChecked(true));
   }, []);
 
-  if (!authChecked) return <div>Loading...</div>;
-
   return (
     <>
       <ScrollToTop />
