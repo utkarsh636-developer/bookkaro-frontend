@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import api from "../api";
 
 function BookedTickets({ user }) {
-  if (!user) return <div>Loading user...</div>; 
   const [tickets, setTickets] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!user) return; 
+
     const fetchTickets = async () => {
       try {
         const ticketsRes = await api.get(
