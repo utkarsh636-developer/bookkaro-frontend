@@ -18,6 +18,7 @@ import TicketPage from "./components/TicketPage";
 import AboutUs from './components/AboutUs';
 import Services from './components/Services';
 import ScrollToTop from "./components/ScrollToTop";
+import Loader from "./components/Loader";
 // import AdminLogin from './components/adminLogin';
 // import Test from "./components/Test";
 // import UploadEvents from "./components/UploadEvents";
@@ -62,7 +63,7 @@ function App() {
       .finally(() => setAuthChecked(true));
   }, []);
 
-  if (!authChecked) return <div>Loading...</div>;
+  if (!authChecked) return <Loader />;
 
   return (
     <>
