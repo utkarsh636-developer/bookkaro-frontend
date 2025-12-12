@@ -32,7 +32,7 @@ function LoginPage({ setUser }) {
           // localStorage.setItem("user", JSON.stringify(res.data.user));
           localStorage.setItem("token", res.data.token);
           setUser(res.data.user);
-          navigate("/");
+          setTimeout(() => navigate("/"), 0);
         }
       } else {
         setError(res.data.message);
