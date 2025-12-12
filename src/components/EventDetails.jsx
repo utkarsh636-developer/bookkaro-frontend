@@ -16,7 +16,7 @@ function EventDetails({ event, user }) {
   
   if (!event) {
     return (
-      <div className="flex items-center justify-center py-20">
+      <div className="flex items-center justify-center">
         <Loader />
       </div>
     );
