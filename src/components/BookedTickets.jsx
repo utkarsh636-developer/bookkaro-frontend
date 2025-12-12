@@ -24,7 +24,6 @@ function BookedTickets({ user }) {
     fetchTickets();
   }, [user]);
 
-  // ✅ Handle click and redirect with eventId, quantity, and type
   const handleTicketClick = (ticket) => {
     const eventId = ticket.eventId?._id || ticket.eventId; // handle both populated & plain IDs
     const quantity = ticket.quantity || 1;

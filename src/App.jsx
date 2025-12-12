@@ -116,7 +116,7 @@ function App() {
         <Route
           path="/ticketPrices/:id"
           element={
-            <AuthLayout>
+            <AuthLayout user={user} authChecked={authChecked}>
               <TicketsPricePage events={events} />
             </AuthLayout>
           }
@@ -125,7 +125,7 @@ function App() {
         <Route
           path="/quantityPage/:id"
           element={            
-            <AuthLayout>
+            <AuthLayout user={user} authChecked={authChecked}>
               <QuantityPage events={events} />
             </AuthLayout>
           }
@@ -134,7 +134,7 @@ function App() {
         <Route
           path="/totalAmount/:id"
           element={
-            <AuthLayout>
+            <AuthLayout user={user} authChecked={authChecked}>
               <TotalAmount events={events} />
             </AuthLayout>
           }
@@ -143,7 +143,7 @@ function App() {
         <Route
           path="/paymentDetails/:id"
           element={
-            <AuthLayout>
+            <AuthLayout user={user} authChecked={authChecked}>
               <PaymentDetails events={events} razorpayKeyId="rzp_test_XXXX" />
             </AuthLayout>
           }
@@ -152,7 +152,7 @@ function App() {
         <Route
           path="/ticket/:id"
           element={
-            <AuthLayout>
+            <AuthLayout user={user} authChecked={authChecked}>
               <TicketPage events={events} />
             </AuthLayout>
           }
@@ -162,7 +162,7 @@ function App() {
         <Route
           path="/login"
           element={
-            <AuthLayout>
+            <AuthLayout user={user} authChecked={authChecked}>
               <LoginPage setUser={setUser} />
             </AuthLayout>
           }
@@ -170,7 +170,7 @@ function App() {
         <Route
           path="/signup"
           element={
-            <AuthLayout>
+            <AuthLayout user={user} authChecked={authChecked}>
               <SignUpPage />
             </AuthLayout>
           }
@@ -179,7 +179,7 @@ function App() {
         <Route
           path="/myevents"
           element={
-            <AuthLayout>
+            <AuthLayout user={user} authChecked={authChecked}>
               <BookedTickets user={user} />
             </AuthLayout>
           }

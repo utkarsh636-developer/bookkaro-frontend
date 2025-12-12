@@ -85,7 +85,7 @@ function Navbar({ user, setUser }) {
                 className="flex items-center justify-center w-10 h-10 rounded-full bg-[#98430e] text-white hover:bg-orange-800 transition"
               >
                 <svg
-                  className="w-6 h-6"
+                  className="w-6 h-6 cursor-pointer"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
