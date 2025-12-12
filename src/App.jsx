@@ -76,7 +76,12 @@ function App() {
             <MainLayout user = {user} setUser={setUser}>
               <LandingPage />
               {events.length === 0 ? (
-                <p className="text-center mt-10">Loading events...</p>
+                <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+                  <Loader />
+                  <p className="mt-4 text-lg font-medium text-gray-600">
+                    Loading event details...
+                  </p>
+                </div>
               ) : (
                 <Events events={events} />
               )}

@@ -100,8 +100,10 @@ function TicketPage() {
   if (!eventData) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-        <Loader />
-        <p className="mt-4 text-lg font-medium text-gray-600">
+        <div className="mb-4">
+          <Loader />
+        </div>
+        <p className="text-lg font-medium text-gray-700">
           Loading your ticket...
         </p>
       </div>
