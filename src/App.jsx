@@ -113,6 +113,7 @@ function App() {
           }
         />
 
+        {/* Auth pages */}
         <Route
           path="/ticketPrices/:id"
           element={
@@ -158,7 +159,6 @@ function App() {
           }
         />
 
-        {/* Auth pages */}
         <Route
           path="/login"
           element={
@@ -180,7 +180,7 @@ function App() {
           path="/myevents"
           element={
             <AuthLayout>
-              <BookedTickets user={user} />
+              <BookedTickets key={user?._id} user={user} />
             </AuthLayout>
           }
         />
