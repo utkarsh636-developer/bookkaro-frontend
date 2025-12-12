@@ -1,6 +1,4 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api";
 
 function EventDetails({ event, user }) {
   const navigate = useNavigate();

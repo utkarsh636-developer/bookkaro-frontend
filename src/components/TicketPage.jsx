@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
-import { QRCodeCanvas } from "qrcode.react";
-import { v4 as uuidv4 } from "uuid";
-import { useParams, useLocation, Link } from "react-router-dom";
-import jsPDF from "jspdf";
 import domtoimage from "dom-to-image";
+import jsPDF from "jspdf";
+import { QRCodeCanvas } from "qrcode.react";
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
 import api from "../api";
 
 function TicketPage() {
@@ -97,7 +96,16 @@ function TicketPage() {
     }
   };
 
-  if (!eventData) return <p className="text-center mt-10">Loading ticket...</p>;
+  if (!eventData) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+        <Loader />
+        <p className="mt-4 text-lg font-medium text-gray-600">
+          Loading your ticket...
+        </p>
+      </div>
+    );
+  }
 
   const { event, quantity, totalPrice } = eventData;
 
