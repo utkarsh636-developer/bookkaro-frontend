@@ -52,14 +52,14 @@ function BookedTickets({ user }) {
 
         {tickets.length === 0 ? (
           <p className="text-gray-500 text-center text-lg">
-            You haven’t booked any tickets yet.
+            You haven’t booked any tickets yet or refresh to fetch tickets.
           </p>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {tickets.map((ticket) => (
               <div
                 key={ticket._id}
-                onClick={() => handleTicketClick(ticket)} // ✅ Redirect on click
+                onClick={() => handleTicketClick(ticket)} // Redirect on click
                 className="bg-white rounded-2xl shadow-xl border border-gray-200 hover:shadow-2xl hover:scale-[1.02] transition duration-300 overflow-hidden cursor-pointer"
               >
                 <div className="p-6">
