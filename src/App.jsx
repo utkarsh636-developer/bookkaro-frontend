@@ -158,24 +158,17 @@ function App() {
           }
         />
 
-        {/* Auth pages */}
         <Route
           path="/login"
-          element={
-            <AuthLayout user={user} authChecked={authChecked}>
-              <LoginPage setUser={setUser} />
-            </AuthLayout>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <AuthLayout user={user} authChecked={authChecked}>
-              <SignUpPage />
-            </AuthLayout>
-          }
+          element={<LoginPage setUser={setUser} />}
         />
 
+        <Route
+          path="/signup"
+          element={<SignUpPage />}
+        />
+
+        {/* Auth pages */}
         <Route
           path="/myevents"
           element={
