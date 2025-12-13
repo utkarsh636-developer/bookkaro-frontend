@@ -1,7 +1,11 @@
 import React from 'react';
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="relative w-full min-h-screen bg-[#f6efe3] flex flex-col lg:flex-row items-center pt-36 p-6 lg:p-10 overflow-x-hidden">
       {/* Left side - Text content */}
@@ -32,6 +36,9 @@ const LandingPage = () => {
             stiffness: 130,
             damping: 18,
           }}
+          onClick={() =>
+            navigate("/detailsPage/6939a8fe38363e2819509a83")
+          }
           className="absolute z-10 w-48 xl:w-60 h-64 xl:h-80 rounded-xl shadow-2xl overflow-hidden cursor-pointer"
         >
           <img
@@ -45,6 +52,9 @@ const LandingPage = () => {
         <motion.div
           whileHover={{ scale: 1.03 }}
           transition={{ duration: 0.25 }}
+          onClick={() =>
+            navigate("/detailsPage/6937217383eabe13f13cf33c")
+          }
           className="relative z-20 w-56 xl:w-72 h-72 xl:h-96 rounded-2xl shadow-3xl overflow-hidden"
         >
           <img
@@ -66,6 +76,9 @@ const LandingPage = () => {
             stiffness: 130,
             damping: 18,
           }}
+          onClick={() =>
+            navigate("/detailsPage/6939a9c338363e2819509ab4")
+          }
           className="absolute z-10 w-48 xl:w-60 h-64 xl:h-80 rounded-xl shadow-2xl overflow-hidden cursor-pointer"
         >
           <img
