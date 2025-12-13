@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from "framer-motion";
 
 const LandingPage = () => {
   return (
@@ -18,38 +19,64 @@ const LandingPage = () => {
 
       {/* Right side - Cards */}
       <div className="relative w-full lg:w-1/2 h-[32rem] flex items-center justify-center lg:pl-20">
-        {/* Left card */}
-        <div className="absolute w-48 sm:w-54 xl:w-60 h-64 sm:72 xl:h-80 rounded-xl shadow-2xl transform -rotate-5 -translate-x-16 sm:-translate-x-28 z-10
-                        hover:-translate-x-12 sm:hover:-translate-x-32 hover:scale-110 hover:shadow-3xl hover:z-30
-                        transition-all duration-400 ease-in-out cursor-pointer overflow-hidden">
-          <img 
-            src="/images/holi.jpg" 
-            alt="Marathon event"
-            className="w-full h-full object-cover scale-125"
-          />
-        </div>
 
-        {/* Center card */}
-        <div className="relative w-56 xl:w-72 h-72 xl:h-96 rounded-2xl shadow-3xl z-20 overflow-hidden
-                        hover:scale-105 hover:shadow-4xl transition-all duration-300">
-          <img 
-            src="/images/arijitSingh.jpg" 
-            alt="Concert event"
+        {/* Left Card */}
+        <motion.div
+          initial={{ x: -140, rotate: -5 }}
+          whileHover={{
+            x: -220,   // moves further LEFT, away from center
+            scale: 1.03,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 130,
+            damping: 18,
+          }}
+          className="absolute z-10 w-48 xl:w-60 h-64 xl:h-80 rounded-xl shadow-2xl overflow-hidden cursor-pointer"
+        >
+          <img
+            src="/images/holi.jpg"
+            alt="Holi Festival"
             className="w-full h-full object-cover"
           />
-        </div>
+        </motion.div>
 
-        {/* Right card */} 
-        <div className="absolute w-48 sm:w-54 xl:w-60 h-64 sm:72 xl:h-80 rounded-xl shadow-2xl transform rotate-5 translate-x-16 sm:translate-x-28 z-10
-                        hover:translate-x-12 sm:hover:translate-x-32 hover:scale-110 hover:shadow-3xl hover:z-30
-                        transition-all duration-400 ease-in-out cursor-pointer overflow-hidden">
-          <img 
-            src="/images/dj_night.jpg" 
-            alt="Holi festival"
-            className="w-full h-full object-cover scale-125"
+        {/* Center Card (always on top) */}
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          transition={{ duration: 0.25 }}
+          className="relative z-20 w-56 xl:w-72 h-72 xl:h-96 rounded-2xl shadow-3xl overflow-hidden"
+        >
+          <img
+            src="/images/arijitSingh.jpg"
+            alt="Concert"
+            className="w-full h-full object-cover"
           />
-        </div>
+        </motion.div>
+
+        {/* Right Card */}
+        <motion.div
+          initial={{ x: 140, rotate: 5 }}
+          whileHover={{
+            x: 220,   // moves further RIGHT, away from center
+            scale: 1.03,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 130,
+            damping: 18,
+          }}
+          className="absolute z-10 w-48 xl:w-60 h-64 xl:h-80 rounded-xl shadow-2xl overflow-hidden cursor-pointer"
+        >
+          <img
+            src="/images/dj_night.jpg"
+            alt="DJ Night"
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
+        
       </div>
+
     </div>
   );
 };
