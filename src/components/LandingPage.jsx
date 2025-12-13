@@ -55,7 +55,7 @@ const LandingPage = () => {
           onClick={() =>
             navigate("/detailsPage/6937217383eabe13f13cf33c")
           }
-          className="relative z-20 w-56 xl:w-72 h-72 xl:h-96 rounded-2xl shadow-3xl overflow-hidden"
+          className="relative z-20 w-56 xl:w-72 h-72 xl:h-96 rounded-2xl shadow-3xl overflow-hidden cursor-pointer"
         >
           <img
             src="/images/arijitSingh.jpg"
