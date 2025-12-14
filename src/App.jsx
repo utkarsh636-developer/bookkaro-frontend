@@ -198,7 +198,7 @@ function App() {
 function EventDetailsWrapper({ events, user }) {
   const { id } = useParams(); 
   const event = events.find(e => String(e._id) === id); 
-  if (!event) return <p>Event not found</p>;
+  if (!event) return <Loader />;
   return <EventDetails event={event} user={user} />;
 }
 
