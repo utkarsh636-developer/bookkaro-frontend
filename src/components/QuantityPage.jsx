@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import api from "../api"; // adjust path if needed
+import api from "../api"; 
 
 export default function QuantityPage({ events }) {
     const { id } = useParams();
@@ -20,7 +20,6 @@ export default function QuantityPage({ events }) {
         setEvent(found || null);
         setLoading(false);
         } else {
-        // fallback fetch if no events passed in
         api
             .get(`/events/${id}`)
             .then((res) => {
@@ -45,7 +44,6 @@ export default function QuantityPage({ events }) {
         navigate(`/totalAmount/${id}?quantity=${quantity}&type=${selectedTicket.type}`);
     };
 
-    // ---- RENDER ----
     if (loading) {
         return <p className="text-center mt-10">Loading...</p>;
     }
@@ -54,15 +52,12 @@ export default function QuantityPage({ events }) {
         return <p className="text-center mt-10">Event not found</p>;
     }
 
-    // Get ticket type from query string
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const ticketType = params.get("type");
 
-    // Find the selected ticket object
     const selectedTicket = event.tickets?.find(t => t.type === ticketType);
 
-    // Use its price (fallback to 0 if not found)
     const pricePerTicket = selectedTicket ? selectedTicket.price : 0;
 
     return (

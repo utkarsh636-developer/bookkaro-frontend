@@ -6,21 +6,17 @@ function TotalAmount({ events }) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Get query params
   const queryParams = new URLSearchParams(location.search);
   const quantity = parseInt(queryParams.get("quantity"), 10) || 1;
   const ticketType = queryParams.get("type");
 
-  // Find event
   const event = events.find((e) => e._id === id);
   if (!event) return <p>Event not found</p>;
 
-  // Find selected ticket
   const selectedTicket = event.tickets?.find((t) => t.type === ticketType);
   const pricePerTicket = selectedTicket ? selectedTicket.price : 0;
   const totalPrice = pricePerTicket * quantity;
 
-  // GST + Convenience Fee
   const GST_RATE = 0.18;
   const CONVENIENCE_FEE_RATE = 0.02;
 

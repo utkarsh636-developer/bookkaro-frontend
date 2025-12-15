@@ -59,7 +59,7 @@ const LandingPage = () => {
           />
         </motion.div>
 
-        {/* Center Card (always on top) */}
+        {/* Center Card */}
         <motion.div
           whileHover={isDesktop ? { scale: 1.03 } : {}}
           transition={{ duration: 0.25 }}

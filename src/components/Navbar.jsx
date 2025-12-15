@@ -132,7 +132,7 @@ function Navbar({ user, setUser }) {
           )}
         </div>
 
-        {/* ✅ Mobile Hamburger */}
+        {/* Mobile Hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden flex flex-col justify-center items-center w-10 h-10 text-[#98430e] hover:text-orange-800 focus:outline-none"
@@ -155,7 +155,7 @@ function Navbar({ user, setUser }) {
         </button>
       </div>
 
-      {/* ✅ Animated Mobile Menu with Blur */}
+      {/* Animated Mobile Menu with Blur */}
       <div
         className={`md:hidden backdrop-blur-lg bg-white/70 border-t border-gray-200 shadow-md overflow-hidden transition-all duration-500 ease-in-out ${
           menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"

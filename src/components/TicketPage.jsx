@@ -11,7 +11,6 @@ function TicketPage() {
   const location = useLocation();
   const ticketRef = useRef();
 
-  // Extract quantity from query string (?quantity=2)
   const queryParams = new URLSearchParams(location.search);
   const ticketType  = queryParams.get("type");
   const quantityParam = parseInt(queryParams.get("quantity"), 10) || 1;

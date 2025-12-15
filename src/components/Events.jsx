@@ -7,7 +7,6 @@ export default function Events({ events }) {
   const safeEvents = Array.isArray(events) ? events : [];
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  // Utility to format date
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString);
     const day = dateObj.getDate();
@@ -17,7 +16,6 @@ export default function Events({ events }) {
 
   const categories = ["All", "Music", "Cultural", "Educational", "Sports", "Food", "Film", "Other"];
 
-  // Filtered events
   const filteredEvents =
     selectedCategory === "All"
       ? safeEvents

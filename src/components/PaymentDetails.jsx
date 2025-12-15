@@ -12,7 +12,6 @@ function PaymentPage({ events }) {
   const ticketType = queryParams.get("type"); // ticket type from URL
   const finalAmount = parseFloat(queryParams.get("finalAmount")) || 0;
 
-  // Find event by id
   const event = events.find((e) => e._id === id);
   if (!event) return <p className="text-center mt-10 text-gray-500">Event not found</p>;
 
@@ -70,7 +69,6 @@ function PaymentPage({ events }) {
             );
 
             if (verifyData.success) {
-              // Redirect to ticket page only after successful verification
               window.location.href = `/ticket/${event._id}?quantity=${quantity}&type=${ticketType}`;
             } else {
               alert(verifyData.error || "Payment verification failed!");

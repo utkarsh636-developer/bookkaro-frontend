@@ -59,7 +59,7 @@ function BookedTickets({ user }) {
             {tickets.map((ticket) => (
               <div
                 key={ticket._id}
-                onClick={() => handleTicketClick(ticket)} // Redirect on click
+                onClick={() => handleTicketClick(ticket)}
                 className="bg-white rounded-2xl shadow-xl border border-gray-200 hover:shadow-2xl hover:scale-[1.02] transition duration-300 overflow-hidden cursor-pointer"
               >
                 <div className="p-6">
