@@ -92,5 +92,5 @@ src/
 ## 🙌 Author
 
 Utkarsh Kankal
-GitHub: https://github.com/utkarsh636-developer
+GitHub: https://github.com/utkarsh636-developer   
 LinkedIn: https://www.linkedin.com/in/utkarsh-kankal-200152350/
