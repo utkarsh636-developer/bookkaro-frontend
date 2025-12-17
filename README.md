@@ -1,4 +1,4 @@
-# 📚 bookkaro – Frontend
+# 🎟️ bookkaro – Frontend
 
 bookkaro is a responsive event booking platform built using React.  
 This repository contains the **frontend** of the bookkaro application.
