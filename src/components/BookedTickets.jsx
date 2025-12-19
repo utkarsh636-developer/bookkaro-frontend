@@ -48,7 +48,7 @@ function BookedTickets({ user }) {
 
       {/* Tickets Section */}
       <div className="mt-12 mb-12">
-        <h3 className="text-3xl font-semibold text-[#98430e] mb-6">My Booked Tickets</h3>
+        <h3 className="text-3xl font-bungee text-[#98430e] mb-6">My Booked Tickets</h3>
 
         {tickets.length === 0 ? (
           <p className="text-gray-500 text-center text-lg">

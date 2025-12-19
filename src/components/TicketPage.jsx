@@ -185,10 +185,6 @@ function TicketPage() {
               <p>{event.time}</p>
             </div>
             <div>
-              <p className="font-semibold text-gray-700">Quantity</p>
-              <p>{quantity}</p>
-            </div>
-            <div>
               <p className="font-semibold text-gray-700">Price</p>
               <p>₹ {totalPriceWithGST.toFixed(2)} <span className="text-sm">(incl. GST)</span></p>
             </div>
